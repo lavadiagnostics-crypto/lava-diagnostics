@@ -73,9 +73,27 @@ export function serverEnv(): ServerEnv {
  */
 export function appUrl(): string {
   const raw =
-    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.NEXT_PUBLIC_APP_URL?.trim() ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : "http://localhost:3000");
-  return raw.replace(/\/+$/, "");
+
+  const withoutTrailingSlash = raw.replace(/\/+$/, "");
+
+  /*
+   * Tolerate a bare hostname.
+   *
+   * `NEXT_PUBLIC_APP_URL=lavadiagnostics.com` is an easy thing to type, and
+   * without a scheme `new URL()` throws — which previously failed the whole
+   * production build during metadata collection rather than degrading. Assume
+   * https for anything that is not already absolute, and leave localhost on
+   * http so local development still works.
+   */
+  if (/^https?:\/\//i.test(withoutTrailingSlash)) {
+    return withoutTrailingSlash;
+  }
+  const scheme = /^localhost(:\d+)?$/i.test(withoutTrailingSlash)
+    ? "http"
+    : "https";
+  return `${scheme}://${withoutTrailingSlash}`;
 }
