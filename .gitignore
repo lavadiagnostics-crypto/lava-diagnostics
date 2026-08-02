@@ -1,0 +1,21 @@
+node_modules
+.next
+out
+build
+.DS_Store
+
+# Environment — never commit real credentials
+.env
+.env*.local
+!.env.example
+
+# Local object-storage driver output. Certificates land here in development;
+# it must never be served statically or committed.
+/.storage
+
+*.pem
+npm-debug.log*
+yarn-error.log*
+.vercel
+next-env.d.ts
+tsconfig.tsbuildinfo

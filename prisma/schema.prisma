@@ -1,0 +1,527 @@
+// LAVA Diagnostics — data model
+//
+// Security-relevant design notes:
+//
+//  * Certificates are private by default (`status = PRIVATE`) and are only ever
+//    reachable through an exact-match lookup on a single row. There is no query
+//    path anywhere in the application that lists certificates to the public.
+//  * `verificationToken` is a 160-bit URL-safe random string and is the bearer
+//    credential embedded in the QR code.
+//  * `certificateNumber` is human-readable and sequential-looking by design, so
+//    that clients can quote it on paperwork. By default it also opens a released
+//    certificate, because a downstream buyer holding only a printed label needs
+//    that to work; bulk enumeration is prevented by the failure lockout in
+//    lib/certificates/verify.ts rather than by hiding the number. Deployments
+//    that prefer strictness set REQUIRE_CODE_WITH_NUMBER=true.
+//  * `pdfPath` is an object key inside a PRIVATE bucket. It is never sent to the
+//    browser; PDFs are streamed through an authorised server route.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────────────────────────
+// Auth
+// ─────────────────────────────────────────────────────────────
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  passwordHash  String?
+  role          UserRole  @default(CUSTOMER)
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts     Account[]
+  sessions     Session[]
+  customer     Customer?
+  activityLogs ActivityLog[]
+
+  @@index([role])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+/// Auth.js email/passwordless + password-reset tokens.
+/// Distinct from `Certificate.verificationToken`, which is unrelated.
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Customers
+// ─────────────────────────────────────────────────────────────
+
+model Customer {
+  id             String  @id @default(cuid())
+  userId         String? @unique
+  /// Legal name printed verbatim on the Certificate of Analysis.
+  companyName    String
+  contactPerson  String
+  email          String
+  phone          String
+  vatNumber      String?
+  /// Opt-in for product/service announcements. Not used for transactional mail.
+  marketingOptIn Boolean @default(false)
+
+  shippingLine1      String?
+  shippingLine2      String?
+  shippingCity       String?
+  shippingState      String?
+  shippingPostalCode String?
+  shippingCountry    String?
+
+  billingLine1      String?
+  billingLine2      String?
+  billingCity       String?
+  billingState      String?
+  billingPostalCode String?
+  billingCountry    String?
+
+  /// Internal-only. Never rendered in the customer portal.
+  internalNotes String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user          User?          @relation(fields: [userId], references: [id], onDelete: SetNull)
+  orders        Order[]
+  certificates  Certificate[]
+  invoices      Invoice[]
+  messages      Message[]
+  notifications Notification[]
+
+  @@index([companyName])
+  @@index([email])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Orders & samples
+// ─────────────────────────────────────────────────────────────
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  SAMPLE_RECEIVED
+  TESTING
+  AWAITING_RESULTS
+  COMPLETED
+  SHIPPED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  INVOICE
+  CARD
+  BANK_TRANSFER
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  /// Human-facing reference, e.g. LAVA-ORD-2026-000184.
+  orderNumber String      @unique
+  customerId  String
+  status      OrderStatus @default(PENDING)
+
+  /// Monetary values are stored in minor units (cents) to avoid float drift.
+  subtotalCents      Int
+  discountCents      Int           @default(0)
+  expediteCents      Int           @default(0)
+  additionalCoaCents Int           @default(0)
+  totalCents         Int
+  currency           String        @default("USD")
+  /// Percentage applied from the volume-discount tier, e.g. 5 or 10.
+  discountPercent    Int           @default(0)
+  isExpedited        Boolean       @default(false)
+  /// Extra company names the COA should additionally be issued under.
+  additionalCoaNames String[]      @default([])
+  combineOnSingleCoa Boolean       @default(true)
+  paymentMethod      PaymentMethod @default(INVOICE)
+  paymentStatus      PaymentStatus @default(UNPAID)
+
+  specialInstructions String? @db.Text
+  /// Admin-only working notes on the order.
+  adminNotes          String? @db.Text
+  /// Reason surfaced to the customer when status is REJECTED.
+  rejectionReason     String? @db.Text
+  trackingCarrier     String?
+  trackingNumber      String?
+
+  submittedAt DateTime  @default(now())
+  acceptedAt  DateTime?
+  receivedAt  DateTime?
+  testingAt   DateTime?
+  completedAt DateTime?
+  shippedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  customer     Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  samples      Sample[]
+  certificates Certificate[]
+  invoices     Invoice[]
+  events       OrderEvent[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([submittedAt])
+}
+
+/// Append-only status history. Drives the customer-facing progress timeline.
+model OrderEvent {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  note      String?     @db.Text
+  /// Whether the transition email was dispatched successfully.
+  emailSent Boolean     @default(false)
+  createdBy String?
+  createdAt DateTime    @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+}
+
+model Sample {
+  id              String  @id @default(cuid())
+  orderId         String
+  /// Lab-assigned identifier, e.g. LAVA-S-2026-001042.
+  sampleCode      String  @unique
+  productName     String
+  batchNumber     String
+  /// Label strength as supplied by the client, e.g. "10 mg".
+  strength        String?
+  /// Number of vials submitted for this line item.
+  quantity        Int     @default(1)
+  /// Peptide the client expects the sample to contain, used as the identity target.
+  expectedPeptide String?
+
+  testPurity           Boolean @default(true)
+  testIdentity         Boolean @default(true)
+  testContent          Boolean @default(false)
+  testSterility        Boolean @default(false)
+  testEndotoxin        Boolean @default(false)
+  testHeavyMetals      Boolean @default(false)
+  testResidualSolvents Boolean @default(false)
+  testConformity       Boolean @default(false)
+  testPhoto            Boolean @default(false)
+
+  /// Price for this line item in cents, before order-level adjustments.
+  lineTotalCents Int      @default(0)
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  order        Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  certificates Certificate[]
+
+  @@index([orderId])
+  @@index([batchNumber])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Certificates
+// ─────────────────────────────────────────────────────────────
+
+enum CertificateStatus {
+  /// Uploaded but not yet released. Verification returns "not found".
+  PRIVATE
+  /// Released: reachable via correct certificate number or verification token.
+  VERIFIED
+  /// Withdrawn. Verification reports the certificate as revoked.
+  REVOKED
+  /// Superseded by a newer revision; kept for the audit trail.
+  ARCHIVED
+}
+
+enum CertificateResult {
+  PASS
+  FAIL
+  INCONCLUSIVE
+}
+
+model Certificate {
+  id String @id @default(cuid())
+
+  /// Human-readable reference printed on the PDF, e.g. LAVA-2026-000184.
+  /// Guessable by design — never sufficient alone to open the certificate.
+  certificateNumber String @unique
+
+  /// 160-bit URL-safe random bearer secret. This is the real access credential
+  /// and the value embedded in the QR code.
+  verificationToken String @unique
+
+  orderId    String?
+  customerId String
+  sampleId   String?
+
+  /// Denormalised so a certificate stays renderable if an order is reorganised.
+  customerName String
+  product      String
+  batchNumber  String
+  lotNumber    String?
+  testedFor    String[] @default([])
+
+  result        CertificateResult @default(PASS)
+  /// Measured purity as a percentage, e.g. 99.12.
+  purityResult  Decimal?          @db.Decimal(6, 3)
+  /// Measured net peptide content in mg.
+  contentResult Decimal?          @db.Decimal(10, 3)
+  summary       String?           @db.Text
+
+  /// Object keys inside the PRIVATE storage bucket. Never exposed to clients.
+  pdfPath           String
+  pdfSizeBytes      Int?
+  thumbnailPath     String?
+  chromatogramPaths String[] @default([])
+  spectrumPaths     String[] @default([])
+
+  /// Data URL of the generated QR code, cached to avoid regenerating on read.
+  qrCode String? @db.Text
+
+  /// HMAC-SHA256 over the certificate's immutable fields plus the PDF bytes.
+  /// Lets a holder confirm the document was not altered after issuance.
+  hash String
+
+  /// Name and title of the authorising analyst, rendered as the digital signature.
+  signedBy    String?
+  signedTitle String?
+
+  status           CertificateStatus @default(PRIVATE)
+  issuedDate       DateTime          @default(now())
+  releasedAt       DateTime?
+  revokedAt        DateTime?
+  /// Reason shown on the verification page when status is REVOKED.
+  revocationReason String?           @db.Text
+
+  /// Aggregate counters. Individual lookups live in CertificateAccessLog.
+  viewCount     Int       @default(0)
+  lastViewedAt  DateTime?
+  /// Admin-only working notes.
+  internalNotes String?   @db.Text
+
+  /// Monotonic revision counter, bumped when the PDF is replaced.
+  revision Int @default(1)
+
+  createdBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order      Order?                 @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  customer   Customer               @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  sample     Sample?                @relation(fields: [sampleId], references: [id], onDelete: SetNull)
+  accessLogs CertificateAccessLog[]
+
+  @@index([customerId])
+  @@index([orderId])
+  @@index([status])
+  @@index([batchNumber])
+  @@index([issuedDate])
+}
+
+/// One row per verification attempt against a specific certificate.
+/// Doubles as the abuse-detection signal for the verification endpoint.
+model CertificateAccessLog {
+  id            String   @id @default(cuid())
+  certificateId String?
+  /// What the caller actually submitted, truncated. Never a full token.
+  queryFragment String?
+  method        String
+  success       Boolean
+  ipHash        String?
+  userAgent     String?
+  createdAt     DateTime @default(now())
+
+  certificate Certificate? @relation(fields: [certificateId], references: [id], onDelete: Cascade)
+
+  @@index([certificateId, createdAt])
+  @@index([ipHash, createdAt])
+}
+
+/// Sliding-window counters for the public verification endpoint. Used when no
+/// Redis instance is configured so that limits still hold across instances.
+model RateLimitEntry {
+  id        String   @id @default(cuid())
+  key       String
+  createdAt DateTime @default(now())
+
+  @@index([key, createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Invoices
+// ─────────────────────────────────────────────────────────────
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  VOID
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  orderId       String?
+  customerId    String
+  status        InvoiceStatus @default(DRAFT)
+
+  subtotalCents   Int
+  taxCents        Int    @default(0)
+  totalCents      Int
+  amountPaidCents Int    @default(0)
+  currency        String @default("USD")
+
+  /// Frozen snapshot of line items so a historical invoice never changes when
+  /// the order or price list is later edited.
+  lineItems Json
+
+  issuedDate DateTime  @default(now())
+  dueDate    DateTime
+  paidAt     DateTime?
+  notes      String?   @db.Text
+  /// Object key of a rendered PDF, if one has been generated.
+  pdfPath    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order    Order?   @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId])
+  @@index([status])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Messaging & notifications
+// ─────────────────────────────────────────────────────────────
+
+enum MessageStatus {
+  UNREAD
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model Message {
+  id         String        @id @default(cuid())
+  customerId String?
+  name       String
+  email      String
+  company    String?
+  phone      String?
+  subject    String
+  body       String        @db.Text
+  status     MessageStatus @default(UNREAD)
+  /// Admin's reply, retained for the support history.
+  replyBody  String?       @db.Text
+  repliedAt  DateTime?
+  repliedBy  String?
+  ipHash     String?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  customer Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+}
+
+model Notification {
+  id         String    @id @default(cuid())
+  customerId String
+  title      String
+  body       String    @db.Text
+  /// Relative in-app path this notification points at.
+  href       String?
+  icon       String?
+  readAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+
+  @@index([customerId, createdAt])
+}
+
+// ─────────────────────────────────────────────────────────────
+// Audit
+// ─────────────────────────────────────────────────────────────
+
+/// Append-only audit trail for privileged actions. Never updated or deleted
+/// by application code.
+model ActivityLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  actorEmail String?
+  action     String
+  /// Model name of the affected record, e.g. "Certificate".
+  entity     String?
+  entityId   String?
+  metadata   Json?
+  ipHash     String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([entity, entityId])
+  @@index([userId])
+}

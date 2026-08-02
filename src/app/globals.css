@@ -1,0 +1,227 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 12%;
+
+    /* Lava Orange #FF5B2E */
+    --primary: 13 100% 59%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Charcoal #1F1F1F */
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 12%;
+
+    --muted: 0 0% 96.5%;
+    --muted-foreground: 0 0% 43%;
+
+    --accent: 13 100% 96.5%;
+    --accent-foreground: 13 88% 38%;
+
+    --destructive: 0 74% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90.5%;
+    --input: 0 0% 88%;
+    --ring: 13 100% 59%;
+
+    --radius: 0.875rem;
+
+    /* Semantic result colours, used by badges and charts. */
+    --pass: 152 62% 34%;
+    --fail: 0 74% 46%;
+    --pending: 38 92% 44%;
+  }
+
+  .dark {
+    --background: 0 0% 7.5%;
+    --foreground: 0 0% 96%;
+
+    --card: 0 0% 10.5%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 96%;
+
+    /* Nudged slightly brighter so it holds contrast on charcoal. */
+    --primary: 13 100% 62%;
+    --primary-foreground: 0 0% 8%;
+
+    --secondary: 0 0% 15.5%;
+    --secondary-foreground: 0 0% 96%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
+
+    --accent: 13 42% 17%;
+    --accent-foreground: 13 100% 76%;
+
+    --destructive: 0 68% 56%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 19%;
+    --input: 0 0% 23%;
+    --ring: 13 100% 62%;
+
+    --pass: 152 52% 52%;
+    --fail: 0 68% 62%;
+    --pending: 38 88% 58%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Tabular figures everywhere numbers are compared vertically. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  ::selection {
+    @apply bg-lava-500/20 text-foreground;
+  }
+
+  /* Visible, branded focus ring — never remove the outline outright. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full border-[3px] border-solid border-transparent bg-charcoal-300/55 bg-clip-content;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-charcoal-400/70 bg-clip-content;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-charcoal-600/70 bg-clip-content;
+  }
+}
+
+@layer components {
+  /* Small uppercase label used above section headings. */
+  .overline {
+    @apply text-[11px] font-semibold uppercase tracking-overline text-muted-foreground;
+  }
+
+  /* Frosted panel. Falls back to a solid tint where backdrop-filter is absent. */
+  .glass {
+    @apply border border-white/60 bg-white/70 shadow-card backdrop-blur-xl backdrop-saturate-150;
+  }
+  .dark .glass {
+    @apply border-white/[0.07] bg-white/[0.045];
+  }
+
+  /* Hairline divider that fades at both ends. */
+  .rule-fade {
+    @apply h-px w-full border-0;
+    background: linear-gradient(
+      to right,
+      transparent,
+      hsl(var(--border)),
+      transparent
+    );
+  }
+
+  /* Skeleton shimmer for loading states. */
+  .shimmer {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .shimmer::after {
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    content: "";
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.055),
+      transparent
+    );
+  }
+
+  /* Faint technical grid, used behind hero sections. */
+  .bg-blueprint {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.55) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.55) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: center center;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  /* Gradient wordmark treatment, used sparingly. */
+  .text-gradient-lava {
+    @apply bg-lava-gradient bg-clip-text text-transparent;
+  }
+
+  /* Hides an element visually while leaving it available to screen readers. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* Respect the user's motion preference across every animated surface. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keep certificate content legible when printed or saved to PDF. */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
