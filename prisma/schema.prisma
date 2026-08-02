@@ -21,9 +21,18 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+
+  // Direct (non-pooled) connection, used only by `prisma migrate`. Migrations
+  // need advisory locks and prepared statements, which PgBouncer's transaction
+  // pooling mode does not pass through.
+  //
+  // Named DATABASE_URL_UNPOOLED because that is exactly what the Neon/Vercel
+  // integration injects automatically — so a Vercel deploy needs no manual
+  // database configuration at all. On other providers, set this variable to
+  // your direct connection string (port 5432, no pooler in the host).
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 // ─────────────────────────────────────────────────────────────

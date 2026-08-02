@@ -9,7 +9,8 @@ import { z } from "zod";
  */
 const serverSchema = z.object({
   DATABASE_URL: z.string().min(1, "DATABASE_URL is required"),
-  DIRECT_URL: z.string().optional(),
+  /** Direct connection, read by `prisma migrate` rather than by the app. */
+  DATABASE_URL_UNPOOLED: z.string().optional(),
 
   AUTH_SECRET: z.string().min(16, "AUTH_SECRET must be at least 16 characters"),
   CERTIFICATE_HASH_SECRET: z

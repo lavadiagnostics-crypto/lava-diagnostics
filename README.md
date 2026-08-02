@@ -54,7 +54,7 @@ Generate the two secrets and paste them into `.env`:
 echo "AUTH_SECRET=$(openssl rand -base64 32)"; echo "CERTIFICATE_HASH_SECRET=$(openssl rand -base64 32)"
 ```
 
-Set `DATABASE_URL` and `DIRECT_URL` to your Postgres instance, then:
+Set `DATABASE_URL` and `DATABASE_URL_UNPOOLED` to your Postgres instance, then:
 
 ```bash
 npm run db:push && npm run db:seed
@@ -108,7 +108,7 @@ Then set both URLs to `postgresql://postgres:lava@localhost:5432/lava`.
 | Variable | Required | Notes |
 | --- | --- | --- |
 | `DATABASE_URL` | Yes | Pooled connection used at runtime |
-| `DIRECT_URL` | Migrations | Direct (non-pooled) connection for `prisma migrate` |
+| `DATABASE_URL_UNPOOLED` | Migrations | Direct (non-pooled) connection for `prisma migrate`. The Neon/Vercel integration injects this automatically |
 | `AUTH_SECRET` | Yes | 32-byte random. Session signing |
 | `CERTIFICATE_HASH_SECRET` | Yes | 32-byte random, **separate from `AUTH_SECRET`**. Keys certificate hashes and PDF access grants |
 | `NEXT_PUBLIC_APP_URL` | Yes | Canonical origin. Baked into QR codes — must match production exactly |
