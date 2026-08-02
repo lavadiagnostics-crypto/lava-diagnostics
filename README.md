@@ -290,11 +290,13 @@ src/
    - `NEXT_PUBLIC_APP_URL` = your real production origin (QR codes bake this in)
    - `STORAGE_DRIVER=supabase`
    - `EMAIL_DRIVER=resend`
-4. Run migrations against production:
-   ```bash
-   npx prisma migrate deploy
-   ```
-5. Deploy. `npm run build` runs `prisma generate` automatically.
+4. Deploy. The build script runs `prisma generate && prisma migrate deploy`
+   before `next build`, so the schema is created and kept current automatically
+   on every deploy — you do not need to run migrations by hand.
+
+   Note that this means **the build will fail if `DATABASE_URL` is unreachable**.
+   That is deliberate: a green deploy against a missing database would only fail
+   later, at the first request from a real client.
 6. Create your first administrator — either run the seed once with production
    `SEED_ADMIN_*` values, or promote an existing user:
    ```sql
