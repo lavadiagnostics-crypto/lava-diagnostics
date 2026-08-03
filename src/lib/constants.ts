@@ -5,8 +5,10 @@ export const BRAND = {
   shortName: "LAVA",
   tagline: "Independent Third-Party Laboratory Testing",
   domain: "lavadiagnostics.com",
-  email: "lab@lavadiagnostics.com",
-  phone: "+1 (615) 000-0000",
+  email: "support@lavadiagnostics.com",
+  // No public telephone number: enquiries are handled by email so that every
+  // technical answer is written down and attributable. Removing `phone` here
+  // is what takes it off the contact page and the footer.
   address: {
     line1: "Analytical Sciences Building",
     line2: "1400 Research Parkway, Suite 300",

@@ -256,7 +256,7 @@ export function ContactStep() {
                 type="tel"
                 autoComplete="tel"
                 className="mt-2"
-                placeholder="+1 (615) 000-0000"
+                placeholder="Include your country code"
                 invalid={Boolean(errors.phone)}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
                 {...register("phone")}

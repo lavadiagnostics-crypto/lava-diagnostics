@@ -26,7 +26,7 @@ const serverSchema = z.object({
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().default("LAVA Diagnostics <no-reply@lavadiagnostics.com>"),
   EMAIL_REPLY_TO: z.string().optional(),
-  EMAIL_INTERNAL_INBOX: z.string().default("lab@lavadiagnostics.com"),
+  EMAIL_INTERNAL_INBOX: z.string().default("support@lavadiagnostics.com"),
 
   UPSTASH_REDIS_REST_URL: z.string().optional(),
   UPSTASH_REDIS_REST_TOKEN: z.string().optional(),

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { BRAND, FOOTER_NAV } from "@/lib/constants";
 
@@ -37,15 +37,6 @@ export function SiteFooter() {
                   className="transition-colors hover:text-foreground"
                 >
                   {BRAND.email}
-                </a>
-              </div>
-              <div className="flex gap-3">
-                <Phone className="mt-0.5 size-4 shrink-0 text-lava-500" aria-hidden />
-                <a
-                  href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`}
-                  className="transition-colors hover:text-foreground"
-                >
-                  {BRAND.phone}
                 </a>
               </div>
             </address>

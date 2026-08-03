@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Clock, Mail, MapPin, MessageSquare, Phone, ScanLine } from "lucide-react";
+import { Clock, Mail, MapPin, MessageSquare, ScanLine } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -71,24 +71,6 @@ export default function ContactPage() {
                         className="break-words font-medium transition-colors hover:text-lava-600 dark:hover:text-lava-400"
                       >
                         {BRAND.email}
-                      </a>
-                    </dd>
-                  </div>
-                </div>
-
-                <div className="flex gap-3.5">
-                  <Phone
-                    className="mt-0.5 size-4 shrink-0 text-lava-500"
-                    aria-hidden
-                  />
-                  <div>
-                    <dt className="text-[13px] text-muted-foreground">Phone</dt>
-                    <dd className="mt-0.5">
-                      <a
-                        href={`tel:${BRAND.phone.replace(/[^\d+]/g, "")}`}
-                        className="font-medium transition-colors hover:text-lava-600 dark:hover:text-lava-400"
-                      >
-                        {BRAND.phone}
                       </a>
                     </dd>
                   </div>
