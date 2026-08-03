@@ -98,7 +98,7 @@ export async function logoutAction(): Promise<void> {
 /**
  * Client self-registration.
  *
- * Only ever creates CUSTOMER accounts — the role is hard-coded here and there is
+ * Only ever creates CUSTOMER accounts - the role is hard-coded here and there is
  * no code path through which a request can ask for ADMIN. Admin accounts are
  * created by the seed script or promoted directly in the database.
  */
@@ -136,7 +136,7 @@ export async function registerAction(
     });
 
     if (existingUser) {
-      // Enumeration is already possible here by design — a registration form
+      // Enumeration is already possible here by design - a registration form
       // must tell the user their address is taken. Point them at sign-in.
       return {
         ok: false,

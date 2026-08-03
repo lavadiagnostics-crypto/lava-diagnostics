@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/misc";
 
 /**
  * Verification lookups hit the database and the rate limiter, so this skeleton
- * is worth the small amount of markup — a blank screen during a lookup reads as
+ * is worth the small amount of markup - a blank screen during a lookup reads as
  * a failure to a visitor checking whether a document is genuine.
  */
 export default function VerifyLoading() {

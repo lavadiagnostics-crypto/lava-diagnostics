@@ -8,7 +8,7 @@ import { verifyQuerySchema } from "@/lib/validations/certificate";
  * Public verification action.
  *
  * Returns a discriminated result rather than throwing, and never includes the
- * certificate itself — on success it redirects to the token URL, which is the
+ * certificate itself - on success it redirects to the token URL, which is the
  * only place a certificate is rendered. That keeps exactly one code path
  * responsible for displaying a certificate.
  */
@@ -44,7 +44,7 @@ export async function submitVerification(
       redirect(`/verify/${outcome.certificate.verificationToken}`);
 
     case "REVOKED":
-      // A revoked certificate still has a page — the holder needs to see why.
+      // A revoked certificate still has a page - the holder needs to see why.
       redirect(`/verify/${outcome.certificate.verificationToken}`);
 
     case "RATE_LIMITED":

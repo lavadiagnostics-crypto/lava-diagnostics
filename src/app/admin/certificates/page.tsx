@@ -39,7 +39,7 @@ const PAGE_SIZE = 25;
 /**
  * Administrative COA library.
  *
- * This is the one place certificates are listed — and it is behind an admin
+ * This is the one place certificates are listed - and it is behind an admin
  * session. It is NOT a public directory: no route reachable without an
  * administrator session can enumerate certificates, and this page is `noindex`
  * via the admin layout plus the X-Robots-Tag header in next.config.ts.
@@ -155,7 +155,7 @@ export default async function AdminCertificatesPage({
             <strong className="font-semibold">
               This library is visible to administrators only.
             </strong>{" "}
-            Certificates are private by default — a{" "}
+            Certificates are private by default - a{" "}
             <strong className="font-semibold">Private</strong> certificate
             verifies as &ldquo;not found&rdquo; for everyone, including its own
             client. Releasing a certificate is what makes it reachable by anyone

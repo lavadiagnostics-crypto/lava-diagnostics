@@ -54,7 +54,7 @@ export interface OrderOption {
  * Certificate upload form.
  *
  * Uses a `FormData` submission because it carries a file. The action recomputes
- * the certificate number, verification token and hash server-side — nothing
+ * the certificate number, verification token and hash server-side - nothing
  * security-relevant is accepted from this form.
  */
 export function CertificateUploadForm({
@@ -253,7 +253,7 @@ export function CertificateUploadForm({
               value={customerId || undefined}
               onValueChange={(value) => {
                 setCustomerId(value);
-                // Clear order/sample — they belong to the previous client.
+                // Clear order/sample - they belong to the previous client.
                 setOrderId("");
                 setSampleId("");
               }}
@@ -264,7 +264,7 @@ export function CertificateUploadForm({
               <SelectContent>
                 {customers.map((customer) => (
                   <SelectItem key={customer.id} value={customer.id}>
-                    {customer.companyName} — {customer.email}
+                    {customer.companyName} - {customer.email}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -313,7 +313,7 @@ export function CertificateUploadForm({
               <Label htmlFor="sample">
                 Sample{" "}
                 <span className="font-normal text-muted-foreground">
-                  (optional — pre-fills product and batch)
+                  (optional - pre-fills product and batch)
                 </span>
               </Label>
               <Select value={sampleId || undefined} onValueChange={applySample}>
@@ -323,7 +323,7 @@ export function CertificateUploadForm({
                 <SelectContent>
                   {selectedOrder.samples.map((sample) => (
                     <SelectItem key={sample.id} value={sample.id}>
-                      {sample.productName} — {sample.batchNumber}
+                      {sample.productName} - {sample.batchNumber}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -554,8 +554,7 @@ export function CertificateUploadForm({
             />
             <p className="text-[13px] leading-relaxed">
               Check the PDF, the client, the batch number and the result before
-              saving. Once a certificate has been released it cannot be deleted —
-              only revoked, which is visible to anyone who checks it.
+              saving. Once a certificate has been released it cannot be deleted - only revoked, which is visible to anyone who checks it.
             </p>
           </div>
         ) : null}

@@ -20,7 +20,7 @@ import {
  * Verification search form.
  *
  * Deliberately has no "browse" or "recent certificates" affordance, and never
- * autocompletes from a list of real certificate numbers — there is no endpoint
+ * autocompletes from a list of real certificate numbers - there is no endpoint
  * that could supply one.
  */
 
@@ -183,14 +183,14 @@ export function VerifyForm({ initialQuery }: { initialQuery?: string }) {
                     </h2>
                     <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
                       No released certificate matches what you entered. Check the
-                      reference for transcription errors — the letter O and the
+                      reference for transcription errors - the letter O and the
                       digit 0 are the usual culprits.
                     </p>
                     <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
                       If the reference is definitely correct as printed, then we
                       did not issue this certificate. We maintain no unlisted or
                       private register that a genuine certificate could be hiding
-                      in — a reference that does not resolve does not exist in our
+                      in - a reference that does not resolve does not exist in our
                       records.
                     </p>
                   </div>

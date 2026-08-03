@@ -29,7 +29,7 @@ export const metadata: Metadata = {
  *
  * Looks the order up by number to render real details rather than trusting query
  * parameters. Only non-sensitive fields are shown, and no authentication is
- * required — the order number acts as the reference the submitter just received,
+ * required - the order number acts as the reference the submitter just received,
  * and nothing here is more revealing than the confirmation email they were sent.
  */
 export default async function ConfirmationPage({
@@ -161,7 +161,7 @@ export default async function ConfirmationPage({
           <Separator className="my-6" />
 
           <address className="text-[15px] font-medium not-italic leading-relaxed">
-            {BRAND.name} — Sample Receiving
+            {BRAND.name} - Sample Receiving
             <br />
             {BRAND.address.line1}
             <br />
@@ -175,7 +175,7 @@ export default async function ConfirmationPage({
 
           <p className="mt-5 text-[13px] leading-relaxed text-muted-foreground">
             Declare contents as research chemical samples for laboratory analysis.
-            Do not describe them as pharmaceuticals or supplements — an inaccurate
+            Do not describe them as pharmaceuticals or supplements - an inaccurate
             declaration is the most common cause of a customs hold.
           </p>
         </Card>
@@ -229,7 +229,7 @@ export default async function ConfirmationPage({
 
           <p className="mt-6 text-[13px] leading-relaxed text-muted-foreground">
             The total above is an estimate. It is confirmed at invoicing, where
-            volume tiers are applied against your total monthly volume — so your
+            volume tiers are applied against your total monthly volume - so your
             invoice may be lower than this figure, never higher.
           </p>
         </Card>

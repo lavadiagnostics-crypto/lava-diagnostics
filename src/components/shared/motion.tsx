@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
  * Motion primitives.
  *
  * Every component here honours `prefers-reduced-motion` by collapsing to an
- * instant, static render rather than a faster animation — a shortened animation
+ * instant, static render rather than a faster animation - a shortened animation
  * still moves, which is the thing the preference asks us not to do.
  *
  * Props extend `HTMLMotionProps<"div">` rather than `React.HTMLAttributes`

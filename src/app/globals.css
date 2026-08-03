@@ -88,9 +88,18 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "cv11", "ss01";
-    font-variation-settings: "opsz" 32;
     text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * Display type is set tight and optically corrected. Grotesk headlines at
+   * large sizes need negative tracking or the counters read as gaps.
+   */
+  h1,
+  h2,
+  h3 {
+    font-feature-settings: "ss01";
+    text-wrap: balance;
   }
 
   /* Tabular figures everywhere numbers are compared vertically. */
@@ -103,7 +112,7 @@
     @apply bg-lava-500/20 text-foreground;
   }
 
-  /* Visible, branded focus ring — never remove the outline outright. */
+  /* Visible, branded focus ring - never remove the outline outright. */
   :focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }

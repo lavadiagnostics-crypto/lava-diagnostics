@@ -1,27 +1,30 @@
 import type { MetadataRoute } from "next";
 import { appUrl } from "@/lib/env";
-import { KNOWLEDGE_ARTICLES } from "@/lib/constants";
+import { ARTICLES } from "@/content/index";
 
 /**
  * Sitemap.
  *
- * Lists marketing content only. No certificate, order, invoice or portal URL
- * appears here — a sitemap listing certificates would defeat the entire
- * verification-only access model.
+ * Marketing and knowledge-centre content only. No certificate, order, invoice
+ * or portal URL appears here: a sitemap listing certificates would hand a
+ * crawler exactly the enumerable index that the verification model exists to
+ * prevent.
+ *
+ * Priorities are relative, not absolute. They say which pages matter most
+ * within this site, which is the only thing the field has ever meant.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = appUrl();
   const now = new Date();
 
-  // `satisfies` keeps each `changeFrequency` as its literal type rather than
-  // widening the array's element type to `string`.
   const routes = [
     { url: `${base}/`, priority: 1, changeFrequency: "weekly" },
     { url: `${base}/services`, priority: 0.9, changeFrequency: "monthly" },
     { url: `${base}/pricing`, priority: 0.9, changeFrequency: "monthly" },
+    { url: `${base}/knowledge-base`, priority: 0.9, changeFrequency: "weekly" },
     { url: `${base}/about`, priority: 0.8, changeFrequency: "monthly" },
-    { url: `${base}/knowledge-base`, priority: 0.8, changeFrequency: "weekly" },
-    { url: `${base}/contact`, priority: 0.7, changeFrequency: "yearly" },
+    { url: `${base}/submit`, priority: 0.8, changeFrequency: "monthly" },
+    { url: `${base}/contact`, priority: 0.6, changeFrequency: "yearly" },
     { url: `${base}/legal/terms`, priority: 0.3, changeFrequency: "yearly" },
     { url: `${base}/legal/privacy`, priority: 0.3, changeFrequency: "yearly" },
     {
@@ -39,11 +42,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }));
 
-  const articles: MetadataRoute.Sitemap = KNOWLEDGE_ARTICLES.map((article) => ({
+  // Pillar guides outrank cluster articles, and each carries its own modified
+  // date rather than a blanket build timestamp.
+  const articles: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
     url: `${base}/knowledge-base/${article.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.6,
+    lastModified: new Date(article.dateModified),
+    changeFrequency: "monthly" as const,
+    priority: article.isPillar ? 0.9 : 0.7,
   }));
 
   return [...staticRoutes, ...articles];

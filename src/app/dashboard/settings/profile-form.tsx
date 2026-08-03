@@ -167,7 +167,7 @@ export function ProfileForm({ defaults }: { defaults: ProfileFormValues }) {
           </div>
           <div>
             <Label htmlFor="shipping-country">Country</Label>
-            {/* Passed through verbatim — see the note in submit/steps/contact-step.tsx. */}
+            {/* Passed through verbatim - see the note in submit/steps/contact-step.tsx. */}
             <Select
               value={country ?? ""}
               onValueChange={(value) =>

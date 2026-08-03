@@ -84,7 +84,7 @@ export function appUrl(): string {
    * Tolerate a bare hostname.
    *
    * `NEXT_PUBLIC_APP_URL=lavadiagnostics.com` is an easy thing to type, and
-   * without a scheme `new URL()` throws — which previously failed the whole
+   * without a scheme `new URL()` throws - which previously failed the whole
    * production build during metadata collection rather than degrading. Assume
    * https for anything that is not already absolute, and leave localhost on
    * http so local development still works.

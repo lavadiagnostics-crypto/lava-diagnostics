@@ -134,7 +134,7 @@ function AddressFields({ prefix }: { prefix: "shipping" | "billing" }) {
 
           `value` is passed straight through, including the empty string. Coercing
           an empty value to `undefined` would make Radix fall back to its own
-          internal state — the trigger would then display a selection that the
+          internal state - the trigger would then display a selection that the
           form never received, and validation would fail on a field that looks
           filled. An empty string matches no item, so the placeholder still shows.
         */}
@@ -212,7 +212,7 @@ export function ContactStep() {
               id="companyName-help"
               className="mt-2 text-[13px] leading-relaxed text-muted-foreground"
             >
-              Individuals are welcome — enter your full name. This appears{" "}
+              Individuals are welcome - enter your full name. This appears{" "}
               <strong className="font-semibold text-foreground">
                 exactly as entered
               </strong>{" "}
@@ -291,7 +291,7 @@ export function ContactStep() {
                 <strong className="font-semibold">
                   Your certificate is sent here.
                 </strong>{" "}
-                Please check the spelling carefully — we cannot redeliver to a
+                Please check the spelling carefully - we cannot redeliver to a
                 corrected address once a certificate has been released.
               </p>
             </div>
@@ -329,7 +329,7 @@ export function ContactStep() {
               className="mt-1 block text-[13px] leading-relaxed text-muted-foreground"
             >
               Occasional notes about new assays and method updates. Order and
-              certificate notifications are sent regardless — this only covers
+              certificate notifications are sent regardless - this only covers
               announcements, and you can unsubscribe at any time.
             </span>
           </span>

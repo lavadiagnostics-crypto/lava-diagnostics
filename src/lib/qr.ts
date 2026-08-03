@@ -6,7 +6,7 @@ import { appUrl } from "@/lib/env";
  *
  *   https://lavadiagnostics.com/verify/<verificationToken>
  *
- * The token — not the certificate number — is what the QR encodes, because the
+ * The token - not the certificate number - is what the QR encodes, because the
  * token is the actual access credential. Anyone holding the physical certificate
  * can scan it; nobody can derive it from the visible certificate number.
  */

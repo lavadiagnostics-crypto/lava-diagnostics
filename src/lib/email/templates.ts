@@ -10,7 +10,7 @@ import type { OrderStatus } from "@prisma/client";
  * Note what these deliberately do NOT contain: certificate verification tokens
  * are only ever sent to the customer who owns the certificate, and only as a
  * link they must already be entitled to. No email includes a PDF attachment or
- * a storage URL — recipients are always routed through verification so that
+ * a storage URL - recipients are always routed through verification so that
  * access is logged and revocable.
  */
 
@@ -28,7 +28,7 @@ export async function sendOrderConfirmation(
   ctx: OrderEmailContext & { estimatedTurnaround: string; requiredVials: number },
 ): Promise<SendEmailResult> {
   const { html, text } = renderEmail({
-    preheader: `Order ${ctx.orderNumber} received — shipping instructions inside.`,
+    preheader: `Order ${ctx.orderNumber} received - shipping instructions inside.`,
     heading: "Submission received",
     paragraphs: [
       `Thank you, ${ctx.contactPerson}. We have logged your submission for ${ctx.companyName} and reserved capacity on the analytical schedule.`,
@@ -52,7 +52,7 @@ export async function sendOrderConfirmation(
 
   return sendEmail({
     to: ctx.to,
-    subject: `Order ${ctx.orderNumber} received — LAVA Diagnostics`,
+    subject: `Order ${ctx.orderNumber} received - LAVA Diagnostics`,
     html,
     text,
   });
@@ -74,7 +74,7 @@ export async function sendSampleReceived(
 
   return sendEmail({
     to: ctx.to,
-    subject: `Samples received — ${ctx.orderNumber}`,
+    subject: `Samples received - ${ctx.orderNumber}`,
     html,
     text,
   });
@@ -96,7 +96,7 @@ export async function sendTestingStarted(
 
   return sendEmail({
     to: ctx.to,
-    subject: `Testing started — ${ctx.orderNumber}`,
+    subject: `Testing started - ${ctx.orderNumber}`,
     html,
     text,
   });
@@ -118,7 +118,7 @@ export async function sendAwaitingResults(
 
   return sendEmail({
     to: ctx.to,
-    subject: `In final review — ${ctx.orderNumber}`,
+    subject: `In final review - ${ctx.orderNumber}`,
     html,
     text,
   });
@@ -140,7 +140,7 @@ export async function sendOrderAccepted(
 
   return sendEmail({
     to: ctx.to,
-    subject: `Order accepted — ${ctx.orderNumber}`,
+    subject: `Order accepted - ${ctx.orderNumber}`,
     html,
     text,
   });
@@ -200,12 +200,12 @@ export async function sendCoaReady(ctx: {
       href: `${appUrl()}/verify/${ctx.verificationToken}`,
     },
     footnote:
-      "Treat this link as confidential — anyone holding it can view this certificate. Your customers can independently confirm authenticity by scanning the QR code printed on the document.",
+      "Treat this link as confidential - anyone holding it can view this certificate. Your customers can independently confirm authenticity by scanning the QR code printed on the document.",
   });
 
   return sendEmail({
     to: ctx.to,
-    subject: `Certificate ${ctx.certificateNumber} released — ${ctx.product}`,
+    subject: `Certificate ${ctx.certificateNumber} released - ${ctx.product}`,
     html,
     text,
   });
@@ -221,7 +221,7 @@ export async function sendInvoiceIssued(ctx: {
   dueDate: Date;
 }): Promise<SendEmailResult> {
   const { html, text } = renderEmail({
-    preheader: `Invoice ${ctx.invoiceNumber} — ${formatCents(ctx.totalCents, ctx.currency)}`,
+    preheader: `Invoice ${ctx.invoiceNumber} - ${formatCents(ctx.totalCents, ctx.currency)}`,
     heading: "Invoice issued",
     paragraphs: [
       `${ctx.contactPerson}, invoice ${ctx.invoiceNumber} has been issued to your account.`,
@@ -241,7 +241,7 @@ export async function sendInvoiceIssued(ctx: {
 
   return sendEmail({
     to: ctx.to,
-    subject: `Invoice ${ctx.invoiceNumber} — LAVA Diagnostics`,
+    subject: `Invoice ${ctx.invoiceNumber} - LAVA Diagnostics`,
     html,
     text,
   });
@@ -276,7 +276,7 @@ export async function sendShippingConfirmation(
 
   return sendEmail({
     to: ctx.to,
-    subject: `Shipment dispatched — ${ctx.orderNumber}`,
+    subject: `Shipment dispatched - ${ctx.orderNumber}`,
     html,
     text,
   });
@@ -289,7 +289,7 @@ export async function sendContactAcknowledgement(ctx: {
 }): Promise<SendEmailResult> {
   const { html, text } = renderEmail({
     preheader: "We have received your enquiry.",
-    heading: "Thanks — we have your enquiry",
+    heading: "Thanks - we have your enquiry",
     paragraphs: [
       `${ctx.name}, thank you for contacting LAVA Diagnostics. Your message regarding "${ctx.subject}" has reached our laboratory team.`,
       "Technical enquiries are answered by an analyst, typically within one business day.",
@@ -299,7 +299,7 @@ export async function sendContactAcknowledgement(ctx: {
 
   return sendEmail({
     to: ctx.to,
-    subject: "We have received your enquiry — LAVA Diagnostics",
+    subject: "We have received your enquiry - LAVA Diagnostics",
     html,
     text,
   });

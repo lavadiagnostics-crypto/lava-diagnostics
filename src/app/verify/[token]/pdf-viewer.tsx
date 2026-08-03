@@ -111,7 +111,7 @@ export function PdfViewer({
 
       <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
         This document is served from private storage through an authorised,
-        time-limited session. The link above is not shareable — anyone else
+        time-limited session. The link above is not shareable - anyone else
         opening it must verify the certificate themselves.
       </p>
     </div>

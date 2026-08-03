@@ -8,7 +8,7 @@ import type { Prisma } from "@prisma/client";
  *
  * Every privileged mutation records who did what to which record. Logging must
  * never break the operation it is describing, so failures are swallowed after
- * being reported to stderr — a dropped log line is preferable to a failed
+ * being reported to stderr - a dropped log line is preferable to a failed
  * certificate release, and the alternative (throwing) would let an attacker
  * block admin actions by inducing log errors.
  */

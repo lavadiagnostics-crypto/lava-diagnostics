@@ -3,7 +3,7 @@ import { appUrl } from "@/lib/env";
 /**
  * Email shell.
  *
- * Table-based with inline styles — the only approach that survives Outlook,
+ * Table-based with inline styles - the only approach that survives Outlook,
  * Gmail's CSS stripping and Apple Mail dark mode simultaneously. No web fonts,
  * no external images, no media queries beyond a single max-width.
  */
@@ -135,7 +135,7 @@ export function renderEmail(input: EmailLayoutInput): {
     ...(input.button ? ["", `${input.button.label}: ${input.button.href}`] : []),
     ...(input.footnote ? ["", input.footnote] : []),
     "",
-    "—",
+    "-",
     "All services are for research use only.",
     `${base}/verify`,
   ].join("\n");

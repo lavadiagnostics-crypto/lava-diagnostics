@@ -44,7 +44,7 @@ export const orderStatusUpdateSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         path: ["rejectionReason"],
-        message: "A rejection reason is required — it is emailed to the customer.",
+        message: "A rejection reason is required - it is emailed to the customer.",
       });
     }
   });

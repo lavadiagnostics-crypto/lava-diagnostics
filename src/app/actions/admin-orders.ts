@@ -65,7 +65,7 @@ const NOTIFICATION_COPY: Partial<
  *
  * Every transition does four things atomically: updates the order, appends an
  * immutable OrderEvent, creates a portal notification, and records the audit
- * entry. The customer email is sent AFTER the transaction commits — a mail
+ * entry. The customer email is sent AFTER the transaction commits - a mail
  * provider outage must not roll back a legitimate status change, so the send
  * result is recorded on the event instead.
  */
@@ -152,7 +152,7 @@ export async function updateOrderStatus(
         await tx.notification.create({
           data: {
             customerId: order.customerId,
-            title: `${copy.title} — ${order.orderNumber}`,
+            title: `${copy.title} - ${order.orderNumber}`,
             body: copy.body,
             href: `/dashboard/orders/${order.id}`,
             icon: "package",
@@ -306,7 +306,7 @@ export async function createInvoiceForOrder(
         if (test.priceCents === 0) continue;
         const qty = test.perVial ? sample.quantity : 1;
         lineItems.push({
-          description: `${sample.productName} (${sample.batchNumber}) — ${test.label}${qty > 1 ? ` × ${qty}` : ""}`,
+          description: `${sample.productName} (${sample.batchNumber}) - ${test.label}${qty > 1 ? ` × ${qty}` : ""}`,
           amountCents: test.priceCents * qty,
         });
       }

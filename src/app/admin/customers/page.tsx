@@ -134,7 +134,7 @@ export default async function AdminCustomersPage({
                     </p>
                   </TableCell>
                   <TableCell className="text-[13px] text-muted-foreground">
-                    {customer.shippingCountry ?? "—"}
+                    {customer.shippingCountry ?? "-"}
                   </TableCell>
                   <TableCell className="tabular text-center text-sm">
                     {customer._count.orders}

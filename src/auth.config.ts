@@ -4,7 +4,7 @@ import type { NextAuthConfig } from "next-auth";
  * Edge-safe portion of the Auth.js configuration.
  *
  * Deliberately free of Prisma and bcrypt so it can run in the middleware
- * runtime. The Credentials provider — which needs both — is added in
+ * runtime. The Credentials provider - which needs both - is added in
  * `src/auth.ts`, which only ever runs in the Node runtime.
  */
 export const authConfig = {

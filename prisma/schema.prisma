@@ -1,4 +1,4 @@
-// LAVA Diagnostics — data model
+// LAVA Diagnostics - data model
 //
 // Security-relevant design notes:
 //
@@ -29,7 +29,7 @@ datasource db {
   // pooling mode does not pass through.
   //
   // Named DATABASE_URL_UNPOOLED because that is exactly what the Neon/Vercel
-  // integration injects automatically — so a Vercel deploy needs no manual
+  // integration injects automatically - so a Vercel deploy needs no manual
   // database configuration at all. On other providers, set this variable to
   // your direct connection string (port 5432, no pooler in the host).
   directUrl = env("DATABASE_URL_UNPOOLED")
@@ -309,7 +309,7 @@ model Certificate {
   id String @id @default(cuid())
 
   /// Human-readable reference printed on the PDF, e.g. LAVA-2026-000184.
-  /// Guessable by design — never sufficient alone to open the certificate.
+  /// Guessable by design - never sufficient alone to open the certificate.
   certificateNumber String @unique
 
   /// 160-bit URL-safe random bearer secret. This is the real access credential

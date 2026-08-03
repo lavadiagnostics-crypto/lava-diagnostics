@@ -29,7 +29,7 @@ const PRINCIPLES = [
   {
     icon: Scale,
     title: "Structural independence",
-    body: "We hold no ownership stake in, and receive no commission from, any manufacturer, distributor or reseller of research peptides. We do not sell peptides in any form. Our only commercial relationship with a client is the testing fee — and that fee is identical whether a sample passes or fails.",
+    body: "We hold no ownership stake in, and receive no commission from, any manufacturer, distributor or reseller of research peptides. We do not sell peptides in any form. Our only commercial relationship with a client is the testing fee - and that fee is identical whether a sample passes or fails.",
   },
   {
     icon: Eye,
@@ -127,7 +127,7 @@ export default function AboutPage() {
                 not manufacture peptides. We do not distribute them, resell them,
                 broker them, or take a referral fee from anyone who does. There is
                 no arrangement under which a supplier can pay us more for a better
-                number, because there is no better number — there is only what the
+                number, because there is no better number - there is only what the
                 instrument recorded.
               </p>
               <p>

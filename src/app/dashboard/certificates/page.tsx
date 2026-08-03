@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "Certificates" };
 /**
  * The client's own certificates.
  *
- * This is NOT a public directory — it is scoped strictly to the signed-in
+ * This is NOT a public directory - it is scoped strictly to the signed-in
  * customer, and unreleased (PRIVATE) certificates are shown as pending without a
  * link, because they are not yet verifiable by anyone.
  */

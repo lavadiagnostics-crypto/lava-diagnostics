@@ -7,8 +7,7 @@ import { sanitiseFilename } from "@/lib/storage/limits";
  * Private object storage.
  *
  * Every object written through this module lives in a bucket that is NOT
- * publicly readable. There is deliberately no `getPublicUrl` on this interface —
- * the only way bytes reach a browser is `download()` from a server route that
+ * publicly readable. There is deliberately no `getPublicUrl` on this interface - * the only way bytes reach a browser is `download()` from a server route that
  * has already authorised the request.
  *
  * `signedUrl()` exists for the narrow case of handing a short-lived URL to an
@@ -61,7 +60,7 @@ export const storageKeys = {
   invoicePdf: (invoiceId: string) => `invoices/${invoiceId}/invoice.pdf`,
 };
 
-/** PDF magic number check — guards against a renamed non-PDF upload. */
+/** PDF magic number check - guards against a renamed non-PDF upload. */
 export function looksLikePdf(buffer: Buffer): boolean {
   return buffer.subarray(0, 5).toString("latin1") === "%PDF-";
 }

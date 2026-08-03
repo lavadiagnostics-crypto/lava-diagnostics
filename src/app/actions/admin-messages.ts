@@ -43,7 +43,7 @@ export async function replyToMessage(
       paragraphs: [
         `${enquiry.name},`,
         parsed.data.replyBody,
-        "— The laboratory team",
+        " - The laboratory team",
       ],
       footnote:
         "Reply to this email to continue the conversation with the analyst handling your enquiry.",
@@ -51,7 +51,7 @@ export async function replyToMessage(
 
     const sent = await sendEmail({
       to: enquiry.email,
-      subject: `Re: ${enquiry.subject} — LAVA Diagnostics`,
+      subject: `Re: ${enquiry.subject} - LAVA Diagnostics`,
       html,
       text,
     });

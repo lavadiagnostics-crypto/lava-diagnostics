@@ -78,7 +78,7 @@ function NotFoundPanel() {
             <p>
               If you scanned a QR code from a printed document, the document is
               not one of ours. If you followed a link, it may have been
-              mistranscribed — check for missing or altered characters.
+              mistranscribed - check for missing or altered characters.
             </p>
             <p>
               We do not maintain any unlisted register that a genuine certificate
@@ -142,8 +142,8 @@ export default async function VerifyTokenPage({
    * Two-stage resolution.
    *
    * If this visitor already holds a valid grant for the certificate this token
-   * belongs to — typically because they just verified and are refreshing, or
-   * arrived via the search-form redirect — reuse it. That avoids consuming a
+   * belongs to - typically because they just verified and are refreshing, or
+   * arrived via the search-form redirect - reuse it. That avoids consuming a
    * rate-limit slot and avoids double-counting the view.
    *
    * The lookup here is by token, which is the bearer secret, so reusing a grant
@@ -258,7 +258,7 @@ export default async function VerifyTokenPage({
               <div className="min-w-0">
                 <Badge variant="pass" size="lg" className="mb-5">
                   <BadgeCheck aria-hidden />
-                  Verified — issued by {BRAND.name}
+                  Verified - issued by {BRAND.name}
                 </Badge>
                 <h1 className="font-mono text-2xl font-semibold tracking-tight sm:text-3xl">
                   {certificate.certificateNumber}
@@ -430,7 +430,7 @@ export default async function VerifyTokenPage({
                 <div
                   className="mx-auto mt-6 w-40 rounded-2xl border border-border bg-white p-4 [&_svg]:size-full"
                   // Generated server-side by the `qrcode` library from our own
-                  // token — not user input, so there is nothing to inject.
+                  // token - not user input, so there is nothing to inject.
                   dangerouslySetInnerHTML={{ __html: qrSvg }}
                   role="img"
                   aria-label={`QR code linking to certificate ${certificate.certificateNumber}`}

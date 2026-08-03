@@ -192,7 +192,7 @@ export function OrderSummary({
               {pricing.requiredVials} vial
               {pricing.requiredVials === 1 ? "" : "s"} to ship
             </Badge>
-            {turnaround !== "—" ? (
+            {turnaround !== "-" ? (
               <Badge variant="outline" className="border-white/20 text-white/65">
                 {turnaround}
               </Badge>
@@ -209,7 +209,7 @@ export function OrderSummary({
               <TooltipContent>
                 Volume tiers are estimated from this order alone. At invoicing we
                 apply the tier earned by your total monthly volume, so your
-                invoice may be lower than this estimate — never higher.
+                invoice may be lower than this estimate - never higher.
               </TooltipContent>
             </Tooltip>
             <span>

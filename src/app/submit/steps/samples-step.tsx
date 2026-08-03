@@ -53,7 +53,7 @@ function FieldError({ message }: { message?: string }) {
  * Test selection grid for one sample.
  *
  * Rendered as a grid of toggle cards rather than the dense table in the
- * reference screenshots — the table required a legend to decode and did not
+ * reference screenshots - the table required a legend to decode and did not
  * survive narrow viewports. Each card states the assay, price and billing basis
  * on its face.
  */
@@ -120,7 +120,7 @@ function TestSelector({ sampleIndex }: { sampleIndex: number }) {
                 checked={checked}
                 onCheckedChange={(value) => toggle(test.key, value === true)}
                 className="mt-0.5"
-                aria-label={`${test.label} — ${
+                aria-label={`${test.label} - ${
                   test.priceCents === 0 ? "free" : formatCents(test.priceCents)
                 }`}
               />
@@ -328,7 +328,7 @@ function SampleCard({
             <Input
               id={`sample-${index}-peptide`}
               className="mt-2"
-              placeholder="Sequence or common name — used as the identity target"
+              placeholder="Sequence or common name - used as the identity target"
               {...register(`samples.${index}.expectedPeptide`)}
             />
           </div>
@@ -427,7 +427,7 @@ export function SamplesStep() {
               total={fields.length}
               onRemove={() => remove(index)}
               onDuplicate={() => {
-                // Copy everything but the batch number — two samples sharing a
+                // Copy everything but the batch number - two samples sharing a
                 // batch number is almost always a mistake, and a blank field
                 // prompts the user rather than silently duplicating.
                 const source = getValues(`samples.${index}`);
@@ -526,7 +526,7 @@ export function SamplesStep() {
               </span>
               <span className="mt-1 block text-[13px] leading-relaxed text-muted-foreground">
                 Moves your samples to the front of the analytical queue. Note this
-                cannot shorten a fixed incubation — sterility still takes its full
+                cannot shorten a fixed incubation - sterility still takes its full
                 fourteen days.
               </span>
             </span>
@@ -663,8 +663,7 @@ export function SamplesStep() {
             </p>
             <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
               Sterility and endotoxin testing each consume a dedicated unopened
-              vial. The order summary shows the total number of vials to send —
-              sending too few is the most common cause of delay.
+              vial. The order summary shows the total number of vials to send - sending too few is the most common cause of delay.
             </p>
           </div>
         </div>

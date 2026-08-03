@@ -142,7 +142,7 @@ export default async function CustomerInvoicesPage() {
                       ) : null}
                     </TableCell>
                     <TableCell className="font-mono text-[13px] text-muted-foreground">
-                      {invoice.order?.orderNumber ?? "—"}
+                      {invoice.order?.orderNumber ?? "-"}
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-sm text-muted-foreground">
                       {formatDate(invoice.issuedDate)}
@@ -168,7 +168,7 @@ export default async function CustomerInvoicesPage() {
 
       <p className="mt-8 text-center text-xs leading-relaxed text-muted-foreground">
         Questions about an invoice? Reply to the invoice email or contact the
-        laboratory directly — billing queries are handled by a person, not a
+        laboratory directly - billing queries are handled by a person, not a
         portal ticket.
       </p>
     </div>

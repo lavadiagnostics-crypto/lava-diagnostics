@@ -132,7 +132,7 @@ export default async function AdminCertificateDetailPage({
                 {certificate.batchNumber}
               </DataField>
               <DataField label="Lot number" mono>
-                {certificate.lotNumber || "—"}
+                {certificate.lotNumber || "-"}
               </DataField>
               <DataField label="Issue date">
                 {formatDate(certificate.issuedDate)}
@@ -140,12 +140,12 @@ export default async function AdminCertificateDetailPage({
               <DataField label="Purity result">
                 {certificate.purityResult
                   ? `${Number(certificate.purityResult).toFixed(2)}%`
-                  : "—"}
+                  : "-"}
               </DataField>
               <DataField label="Net content">
                 {certificate.contentResult
                   ? `${Number(certificate.contentResult).toFixed(2)} mg`
-                  : "—"}
+                  : "-"}
               </DataField>
               <DataField label="Order">
                 {certificate.order ? (
@@ -156,14 +156,14 @@ export default async function AdminCertificateDetailPage({
                     {certificate.order.orderNumber}
                   </Link>
                 ) : (
-                  "—"
+                  "-"
                 )}
               </DataField>
               <DataField label="Sample" mono>
-                {certificate.sample?.sampleCode || "—"}
+                {certificate.sample?.sampleCode || "-"}
               </DataField>
               <DataField label="Approved by">
-                {certificate.signedBy || "—"}
+                {certificate.signedBy || "-"}
                 {certificate.signedTitle ? (
                   <span className="block text-[13px] font-normal text-muted-foreground">
                     {certificate.signedTitle}
@@ -202,7 +202,7 @@ export default async function AdminCertificateDetailPage({
             {certificate.internalNotes ? (
               <div className="mt-6 rounded-2xl border border-border bg-muted/40 p-4">
                 <p className="overline mb-2">
-                  Internal notes — never shown to the client
+                  Internal notes - never shown to the client
                 </p>
                 <p className="text-[13px] leading-relaxed text-muted-foreground">
                   {certificate.internalNotes}
@@ -214,7 +214,7 @@ export default async function AdminCertificateDetailPage({
             certificate.revocationReason ? (
               <div className="mt-6 rounded-2xl border border-destructive/35 bg-destructive/[0.05] p-4">
                 <p className="overline mb-2 text-destructive">
-                  Revocation reason — shown publicly
+                  Revocation reason - shown publicly
                 </p>
                 <p className="text-[13px] leading-relaxed">
                   {certificate.revocationReason}
@@ -234,7 +234,7 @@ export default async function AdminCertificateDetailPage({
             <div className="overflow-hidden rounded-2xl border border-border">
               {/*
                 Admins are authorised by the PDF route via their session, so the
-                same proxy endpoint serves this preview — no separate code path,
+                same proxy endpoint serves this preview - no separate code path,
                 and no signed storage URL in the markup.
               */}
               <iframe

@@ -44,7 +44,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     priceCents: 20_000,
     description:
       "Reverse-phase gradient separation with diode-array detection. Reports main-peak area percent and resolves related substances down to 0.05% area.",
-    turnaround: "3–5 business days",
+    turnaround: "3-5 business days",
   },
   {
     key: "identity",
@@ -54,7 +54,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     priceCents: 15_000,
     description:
       "Monoisotopic mass confirmation against the theoretical sequence mass, with charge-state deconvolution and mass-accuracy reporting in ppm.",
-    turnaround: "3–5 business days",
+    turnaround: "3-5 business days",
   },
   {
     key: "content",
@@ -64,7 +64,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     priceCents: 12_500,
     description:
       "Absolute mass of active peptide per vial, quantified against a certified reference standard. Distinguishes label claim from net peptide delivered.",
-    turnaround: "4–6 business days",
+    turnaround: "4-6 business days",
   },
   {
     key: "sterility",
@@ -75,7 +75,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     requiresExtraVial: true,
     description:
       "14-day incubation across two growth media for aerobic, anaerobic and fungal recovery. Consumes a dedicated unopened vial.",
-    turnaround: "16–18 business days",
+    turnaround: "16-18 business days",
   },
   {
     key: "endotoxin",
@@ -86,7 +86,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     requiresExtraVial: true,
     description:
       "Quantitative endotoxin burden in EU/mg with positive product control to demonstrate absence of assay inhibition or enhancement.",
-    turnaround: "5–7 business days",
+    turnaround: "5-7 business days",
   },
   {
     key: "heavyMetals",
@@ -95,8 +95,8 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     method: "ICP-MS, USP <232>/<233>",
     priceCents: 10_000,
     description:
-      "Class 1 and Class 2A elemental impurities — lead, arsenic, cadmium, mercury, plus catalytic residues — quantified to sub-ppb detection limits.",
-    turnaround: "5–7 business days",
+      "Class 1 and Class 2A elemental impurities - lead, arsenic, cadmium, mercury, plus catalytic residues - quantified to sub-ppb detection limits.",
+    turnaround: "5-7 business days",
   },
   {
     key: "residualSolvents",
@@ -106,7 +106,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     priceCents: 13_500,
     description:
       "Static headspace screen for Class 1 and Class 2 synthesis solvents including acetonitrile, DMF, TFA-associated residues and methanol.",
-    turnaround: "5–7 business days",
+    turnaround: "5-7 business days",
   },
   {
     key: "conformity",
@@ -117,7 +117,7 @@ export const TEST_CATALOG: readonly TestDefinition[] = [
     perVial: true,
     description:
       "Fill volume, closure integrity, crimp seal and cake appearance assessed per vial against your specification.",
-    turnaround: "2–3 business days",
+    turnaround: "2-3 business days",
   },
   {
     key: "photo",
@@ -280,15 +280,15 @@ export function estimatedTurnaround(order: PriceableOrder): string {
       if (sample.tests[test.key]) selected.add(test.key);
     }
   }
-  if (selected.has("sterility")) return "16–18 business days";
-  if (selected.has("content")) return "4–6 business days";
+  if (selected.has("sterility")) return "16-18 business days";
+  if (selected.has("content")) return "4-6 business days";
   if (
     selected.has("endotoxin") ||
     selected.has("heavyMetals") ||
     selected.has("residualSolvents")
   ) {
-    return "5–7 business days";
+    return "5-7 business days";
   }
-  if (selected.size > 0) return "3–5 business days";
-  return "—";
+  if (selected.size > 0) return "3-5 business days";
+  return "-";
 }

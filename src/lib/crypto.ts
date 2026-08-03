@@ -6,11 +6,11 @@ import { serverEnv } from "@/lib/env";
  *
  * Two distinct jobs live here:
  *
- *  1. `certificateHash` — a tamper-evident fingerprint printed on the
+ *  1. `certificateHash` - a tamper-evident fingerprint printed on the
  *     verification page. A holder can compare the hash shown by LAVA against
  *     the hash of the PDF they possess to prove the document was not altered.
  *
- *  2. `signAccessGrant` / `verifyAccessGrant` — a short-lived, single-certificate
+ *  2. `signAccessGrant` / `verifyAccessGrant` - a short-lived, single-certificate
  *     capability issued only after a successful verification. The PDF route
  *     accepts nothing else. This is what keeps object storage private: the
  *     browser never receives a storage URL, only a grant scoped to one
@@ -84,7 +84,7 @@ export function hashIp(ip: string | null | undefined): string | null {
 
 const GRANT_VERSION = "v1";
 
-/** Default grant lifetime. Deliberately short — long enough to read a PDF. */
+/** Default grant lifetime. Deliberately short - long enough to read a PDF. */
 export const GRANT_TTL_SECONDS = 15 * 60;
 
 export interface AccessGrant {

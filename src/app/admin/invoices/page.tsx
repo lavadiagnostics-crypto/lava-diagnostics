@@ -125,7 +125,7 @@ export default async function AdminInvoicesPage() {
                         {invoice.order.orderNumber}
                       </Link>
                     ) : (
-                      <span className="text-muted-foreground">—</span>
+                      <span className="text-muted-foreground"> - </span>
                     )}
                   </TableCell>
                   <TableCell className="whitespace-nowrap text-[13px] text-muted-foreground">

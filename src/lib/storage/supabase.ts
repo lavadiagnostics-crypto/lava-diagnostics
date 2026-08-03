@@ -5,7 +5,7 @@ import type { StorageDriver } from "@/lib/storage";
 /**
  * Production storage driver backed by a PRIVATE Supabase Storage bucket.
  *
- * Uses the service-role key, which bypasses row-level security — it must never
+ * Uses the service-role key, which bypasses row-level security - it must never
  * be imported into client code. This module is server-only; `@supabase/supabase-js`
  * is only ever instantiated here.
  *

@@ -172,7 +172,7 @@ export default function PricingPage() {
 
         <Reveal className="mt-8" delay={0.1}>
           <p className="text-center text-sm text-muted-foreground">
-            Bundles are conveniences, not packages — you can select any
+            Bundles are conveniences, not packages - you can select any
             combination of assays per sample in the submission form.
           </p>
         </Reveal>
@@ -271,7 +271,7 @@ export default function PricingPage() {
               </ul>
               <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
                 Tiers are estimated from the order in front of you and confirmed
-                at invoicing against your total monthly volume — so your invoice
+                at invoicing against your total monthly volume - so your invoice
                 may be lower than your estimate, never higher.
               </p>
             </Card>
@@ -291,7 +291,7 @@ export default function PricingPage() {
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
                 Moves your samples to the front of the analytical queue. Applied
                 to the discounted subtotal. Note that expediting cannot shorten a
-                fixed incubation — sterility still takes fourteen days.
+                fixed incubation - sterility still takes fourteen days.
               </p>
             </Card>
           </RevealItem>

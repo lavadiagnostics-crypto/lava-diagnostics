@@ -37,7 +37,7 @@ import {
 export const metadata: Metadata = {
   title: "Independent Third-Party Testing for Research Peptides",
   description:
-    "LAVA Diagnostics is an independent analytical laboratory providing RP-HPLC purity, LC-MS identity, ICP-MS elemental impurity, sterility and endotoxin testing for research peptides — with certificates anyone can verify.",
+    "LAVA Diagnostics is an independent analytical laboratory providing RP-HPLC purity, LC-MS identity, ICP-MS elemental impurity, sterility and endotoxin testing for research peptides - with certificates anyone can verify.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
 };
@@ -67,7 +67,7 @@ export default function HomePage() {
 
             <p className="mx-auto mt-7 max-w-2xl text-pretty text-lg leading-relaxed text-muted-foreground sm:text-xl">
               Purity, identity and contamination analysis performed on qualified
-              instrumentation under documented methods — issued as a Certificate
+              instrumentation under documented methods - issued as a Certificate
               of Analysis that anyone holding it can verify in seconds.
             </p>
 
@@ -92,7 +92,7 @@ export default function HomePage() {
             </div>
 
             <p className="mt-8 text-sm text-muted-foreground">
-              Standard turnaround 3–5 business days · Results reported exactly as
+              Standard turnaround 3-5 business days · Results reported exactly as
               measured
             </p>
           </Reveal>
@@ -249,7 +249,7 @@ export default function HomePage() {
                 <p className="mt-5 max-w-xl text-pretty text-[17px] leading-relaxed text-white/70">
                   Every certificate we issue carries a unique number and a QR
                   code. Scanning it returns that one certificate, straight from
-                  our records — so an altered PDF gives itself away immediately.
+                  our records - so an altered PDF gives itself away immediately.
                 </p>
                 <p className="mt-4 max-w-xl text-pretty text-[15px] leading-relaxed text-white/55">
                   There is no public directory of our certificates and no way to
@@ -350,7 +350,7 @@ export default function HomePage() {
             </h2>
             <p className="mt-5 text-pretty text-[15px] leading-relaxed text-muted-foreground">
               If your question is not here, our laboratory team answers technical
-              enquiries directly — usually within one business day.
+              enquiries directly - usually within one business day.
             </p>
             <Button variant="outline" className="mt-7" asChild>
               <Link href="/contact">

@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/shared/site-header";
  * Public marketing shell.
  *
  * The session is read here purely to decide whether the header shows "Client
- * Login" or a link to the portal — no marketing content is gated.
+ * Login" or a link to the portal - no marketing content is gated.
  */
 export default async function MarketingLayout({
   children,

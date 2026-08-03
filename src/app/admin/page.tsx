@@ -201,7 +201,7 @@ export default async function AdminDashboardPage() {
           value={privateCertificates}
           icon={ShieldCheck}
           tone={privateCertificates > 0 ? "pending" : "default"}
-          hint="Private — not verifiable by anyone yet"
+          hint="Private - not verifiable by anyone yet"
         />
         <StatTile
           label="Unread messages"

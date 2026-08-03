@@ -45,7 +45,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     { className, variant, size, asChild = false, loading, children, disabled, ...props },
     ref,
   ) => {
-    // `asChild` renders into a Slot, which requires exactly one child — so the
+    // `asChild` renders into a Slot, which requires exactly one child - so the
     // spinner is only injected when we own the markup.
     if (asChild) {
       return (

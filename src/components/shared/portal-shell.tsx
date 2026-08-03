@@ -60,7 +60,7 @@ export function PortalShell({
   }, [open]);
 
   /**
-   * Exact match for an index route, prefix match otherwise — so /dashboard does
+   * Exact match for an index route, prefix match otherwise - so /dashboard does
    * not stay highlighted while you are on /dashboard/orders.
    */
   function isActive(href: string): boolean {

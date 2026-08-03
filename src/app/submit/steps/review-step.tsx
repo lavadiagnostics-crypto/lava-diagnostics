@@ -191,7 +191,7 @@ export function ReviewStep({ onEditStep }: { onEditStep: (step: number) => void 
                       {index + 1}. {sample.productName || "Unnamed sample"}
                     </p>
                     <p className="mt-1 font-mono text-[13px] text-muted-foreground">
-                      Batch {sample.batchNumber || "—"}
+                      Batch {sample.batchNumber || "-"}
                       {sample.strength ? ` · ${sample.strength}` : ""}
                       {" · "}
                       {sample.quantity} vial{sample.quantity === 1 ? "" : "s"}

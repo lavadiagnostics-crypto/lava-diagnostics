@@ -6,7 +6,7 @@
  * it drags Node built-ins into the browser bundle and fails the build.
  *
  * Upload forms import limits from HERE. Server code may import them from either
- * place — the storage barrel re-exports them.
+ * place - the storage barrel re-exports them.
  */
 
 export const MAX_PDF_BYTES = 20 * 1024 * 1024; // 20 MB

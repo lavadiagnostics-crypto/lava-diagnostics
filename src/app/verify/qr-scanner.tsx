@@ -21,7 +21,7 @@ import { parseScannedValue } from "@/lib/qr";
  * Firefox at time of writing) get a clear explanation and the manual-entry
  * fallback rather than a broken viewfinder.
  *
- * The camera stream is torn down on every exit path — closing the dialog,
+ * The camera stream is torn down on every exit path - closing the dialog,
  * unmounting, a successful scan, or an error. A camera left running is both a
  * privacy problem and a battery one.
  */
@@ -118,7 +118,7 @@ export function QrScannerButton() {
               router.push(`/verify/${token}`);
               return;
             }
-            // A QR that is not one of ours — keep scanning rather than failing,
+            // A QR that is not one of ours - keep scanning rather than failing,
             // since the user may simply have framed the wrong label.
           }
         } catch {

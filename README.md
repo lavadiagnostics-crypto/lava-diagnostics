@@ -1,6 +1,6 @@
 # LAVA Diagnostics
 
-**Independent Third-Party Laboratory Testing** — a production-ready platform for
+**Independent Third-Party Laboratory Testing** - a production-ready platform for
 an analytical laboratory that tests research peptides and issues Certificates of
 Analysis that anyone holding one can independently verify.
 
@@ -28,10 +28,10 @@ Auth.js.
 | Area | Routes |
 | --- | --- |
 | **Marketing** | `/`, `/about`, `/services`, `/pricing`, `/knowledge-base`, `/contact`, `/legal/*` |
-| **Submission** | `/submit` — 3-step form, unlimited samples, live pricing, `/submit/confirmation` |
-| **Verification** | `/verify` — search; `/verify/[token]` — the only page that renders a certificate |
-| **Client portal** | `/dashboard` — orders, tracking, certificates, invoices, notifications, settings |
-| **Admin** | `/admin` — dashboard, orders, COA library, customers, invoices, analytics, messages, audit log, settings |
+| **Submission** | `/submit` - 3-step form, unlimited samples, live pricing, `/submit/confirmation` |
+| **Verification** | `/verify` - search; `/verify/[token]` - the only page that renders a certificate |
+| **Client portal** | `/dashboard` - orders, tracking, certificates, invoices, notifications, settings |
+| **Admin** | `/admin` - dashboard, orders, COA library, customers, invoices, analytics, messages, audit log, settings |
 | **Auth** | `/login`, `/register` |
 
 ---
@@ -77,7 +77,7 @@ on `/verify`.
 
 ### No Postgres locally?
 
-Fastest path is a free hosted database — [Neon](https://neon.tech) or
+Fastest path is a free hosted database - [Neon](https://neon.tech) or
 [Supabase](https://supabase.com) both work and take about a minute. Or with
 Docker:
 
@@ -111,7 +111,7 @@ Then set both URLs to `postgresql://postgres:lava@localhost:5432/lava`.
 | `DATABASE_URL_UNPOOLED` | Migrations | Direct (non-pooled) connection for `prisma migrate`. The Neon/Vercel integration injects this automatically |
 | `AUTH_SECRET` | Yes | 32-byte random. Session signing |
 | `CERTIFICATE_HASH_SECRET` | Yes | 32-byte random, **separate from `AUTH_SECRET`**. Keys certificate hashes and PDF access grants |
-| `NEXT_PUBLIC_APP_URL` | Yes | Canonical origin. Baked into QR codes — must match production exactly |
+| `NEXT_PUBLIC_APP_URL` | Yes | Canonical origin. Baked into QR codes - must match production exactly |
 | `STORAGE_DRIVER` | Yes | `supabase` in production, `local` in development |
 | `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` | If `supabase` | Service-role key is server-only |
 | `SUPABASE_STORAGE_BUCKET` | If `supabase` | Bucket must be **private** |
@@ -135,21 +135,21 @@ This is the part that matters. Read it before touching
 ### Certificates are private by default
 
 A newly uploaded certificate has `status = PRIVATE`. In that state verification
-reports **"Certificate Not Found"** — to everyone, including the client who owns
+reports **"Certificate Not Found"** - to everyone, including the client who owns
 it. An accidental upload is therefore not a disclosure. Releasing is a separate,
 deliberate, audited action.
 
 | Status | Verification behaviour |
 | --- | --- |
 | `PRIVATE` | Reported as not found |
-| `VERIFIED` | Resolves — this is the released state |
+| `VERIFIED` | Resolves - this is the released state |
 | `REVOKED` | Resolves, and reports itself as withdrawn with the reason |
 | `ARCHIVED` | Reported as not found |
 
 `REVOKED` deliberately discloses itself. Someone holding a void document needs to
 learn it is void, not be told it never existed.
 
-### There is no browsable directory — by construction, not by policy
+### There is no browsable directory - by construction, not by policy
 
 Every lookup function resolves to **at most one row**. There is no list endpoint,
 no wildcard, no pagination, no sitemap entry, and no autocomplete backed by real
@@ -158,7 +158,7 @@ behind an administrator session.
 
 Three independent layers keep certificates out of search indexes:
 
-1. `metadata.robots` — site-wide `noindex` default; marketing pages opt back in.
+1. `metadata.robots` - site-wide `noindex` default; marketing pages opt back in.
 2. `X-Robots-Tag` response headers in `next.config.ts` for `/verify/*`, `/api/certificates/*`, `/dashboard/*`, `/admin/*`.
 3. `robots.txt` disallowing those prefixes, plus an explicit block on AI crawlers.
 
@@ -176,7 +176,7 @@ it is worth being explicit about how it is resolved rather than pretending it
 away. Three controls, in ascending order of importance:
 
 1. **Two rate-limit windows** (12/min and 80/hour per hashed IP).
-2. **A failure-ratio lockout** — this is the control that actually defeats
+2. **A failure-ratio lockout** - this is the control that actually defeats
    enumeration. Walking the number space necessarily produces a high proportion
    of misses (gaps in the sequence, unreleased certificates). 15 failures within
    an hour locks that address out for 3 hours. A human mistyping a number once
@@ -185,7 +185,7 @@ away. Three controls, in ascending order of importance:
 
 If you would rather trade the UX for strictness, set `REQUIRE_CODE_WITH_NUMBER=true`.
 Path B then requires the number **and** its verification code together. QR scans
-are unaffected. Nothing else in the application changes — the flag is read in one
+are unaffected. Nothing else in the application changes - the flag is read in one
 place (`VERIFY_POLICY` in `src/lib/certificates/verify.ts`) and surfaced on
 `/admin/settings`.
 
@@ -197,8 +197,7 @@ identical `NOT_FOUND` result. The paired lookup compares in constant time.
 ### PDFs never leave private storage as URLs
 
 Object storage is private and there is deliberately **no `getPublicUrl`** on the
-`StorageDriver` interface. Bytes reach a browser through exactly one route —
-`/api/certificates/[id]/pdf` — which streams them after checking one of:
+`StorageDriver` interface. Bytes reach a browser through exactly one route - `/api/certificates/[id]/pdf` - which streams them after checking one of:
 
 1. A signed, HttpOnly, `SameSite=Strict` **grant cookie** scoped to that one
    certificate, minted by the verification Server Action, 15-minute TTL.
@@ -206,10 +205,10 @@ Object storage is private and there is deliberately **no `getPublicUrl`** on the
    forbids setting cookies during a page render, so `/verify/[token]` has no
    grant yet. The token is already in the visitor's address bar, so accepting it
    here discloses nothing new.
-3. A **session** — the owning customer, or an administrator.
+3. A **session** - the owning customer, or an administrator.
 
 Certificate status is re-checked on every request, so revoking a certificate cuts
-off in-flight grants immediately. A missing grant returns **404, not 403** — a
+off in-flight grants immediately. A missing grant returns **404, not 403** - a
 403 would confirm the certificate exists.
 
 ### Everything else
@@ -226,7 +225,7 @@ off in-flight grants immediately. A missing grant returns **404, not 403** — a
   account is absent so response time does not reveal account existence.
 - **Uploads.** PDF magic-number sniffing (not just MIME), 20 MB cap, filename
   sanitisation, path-traversal rejection in the local driver.
-- **IP addresses** are stored only as keyed, truncated HMACs — enough to
+- **IP addresses** are stored only as keyed, truncated HMACs - enough to
   correlate abuse, not a record of who viewed what.
 - **Audit log** is append-only; never updated or deleted by application code.
 
@@ -267,7 +266,7 @@ src/
   invoicing) move together.
 - **`lib/storage/limits.ts` exists separately** because the storage barrel imports
   `node:fs`. Client upload forms import limits from `limits`, never from the
-  barrel — otherwise the browser bundle pulls in Node built-ins and the build
+  barrel - otherwise the browser bundle pulls in Node built-ins and the build
   fails.
 - **Emails never throw.** A mail outage must not roll back a legitimate status
   change. Sends return `{ ok: false }` and the result is recorded on the
@@ -292,12 +291,12 @@ src/
    - `EMAIL_DRIVER=resend`
 4. Deploy. The build script runs `prisma generate && prisma migrate deploy`
    before `next build`, so the schema is created and kept current automatically
-   on every deploy — you do not need to run migrations by hand.
+   on every deploy - you do not need to run migrations by hand.
 
    Note that this means **the build will fail if `DATABASE_URL` is unreachable**.
    That is deliberate: a green deploy against a missing database would only fail
    later, at the first request from a real client.
-6. Create your first administrator — either run the seed once with production
+6. Create your first administrator - either run the seed once with production
    `SEED_ADMIN_*` values, or promote an existing user:
    ```sql
    UPDATE "User" SET role = 'ADMIN' WHERE email = 'you@yourdomain.com';
@@ -320,14 +319,14 @@ src/
 ## Supabase Storage setup
 
 1. Create a bucket named `lava-certificates`.
-2. **Set it to Private.** This is the whole point — a public bucket defeats the
+2. **Set it to Private.** This is the whole point - a public bucket defeats the
    access model entirely.
 3. Do **not** add any RLS policy granting `select` to `anon` or `authenticated`.
    The app uses the service-role key server-side and needs no client policy.
 4. Copy the project URL and the **service role** key (not the anon key) into
    `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY`.
 
-Verify it is actually private — this must fail:
+Verify it is actually private - this must fail:
 
 ```bash
 curl -I "https://<project>.supabase.co/storage/v1/object/public/lava-certificates/certificates/test.pdf"
@@ -352,7 +351,7 @@ curl -I "https://<project>.supabase.co/storage/v1/object/public/lava-certificate
 | Uploaded against the wrong client, never released | **Delete** |
 | Released prematurely, no copies circulating | **Make private** |
 | Document is wrong and copies may be in circulation | **Revoke** with a reason |
-| Same results, corrected document | **Replace PDF** — bumps revision, keeps the QR working |
+| Same results, corrected document | **Replace PDF** - bumps revision, keeps the QR working |
 
 Released certificates cannot be deleted. That is enforced in
 `deleteCertificate()`, not just in the UI.
@@ -361,7 +360,7 @@ Released certificates cannot be deleted. That is enforced in
 
 `/admin/analytics` shows the 30-day verification failure rate. A sustained high
 rate means either a scanner (the lockout will already be biting) or a certificate
-number misprinted on physical documentation — check recent releases before
+number misprinted on physical documentation - check recent releases before
 assuming abuse. Per-certificate lookup history is on each certificate's detail
 page.
 
@@ -374,7 +373,7 @@ Being straight about what is not finished:
 - **Partially exercised at runtime.** The project typechecks, lints and builds
   cleanly (41 routes), and the schema validates. The marketing pages, the
   verification search page, auth screens and **all three submission steps** have
-  been driven in a real browser — that pass caught two blocking bugs, both since
+  been driven in a real browser - that pass caught two blocking bugs, both since
   fixed (a Radix Select silently falling back to uncontrolled, and a Zod
   `.partial()` rejecting the empty strings the billing block is seeded with).
   What has **not** run is anything requiring a database: the seed, order
@@ -393,7 +392,7 @@ Being straight about what is not finished:
   there is no forgotten-password email yet. The `VerificationToken` table is in
   the schema ready for it.
 - **PDF thumbnails are not generated.** `Certificate.thumbnailPath` exists and is
-  wired through storage, but nothing populates it — that needs a rendering
+  wired through storage, but nothing populates it - that needs a rendering
   library or an external service.
 - **Invoice PDFs are not rendered.** Invoices are structured data with frozen
   line items; `Invoice.pdfPath` is unused.
@@ -408,7 +407,7 @@ Being straight about what is not finished:
 - **The build fetches fonts from Google.** `next/font/google` downloads Inter and
   JetBrains Mono at build time and self-hosts them in the output. If a build
   fails with `NextFontError: Failed to fetch 'Inter'`, that is a network or
-  rate-limit blip — retry it. For fully offline or air-gapped builds, download
+  rate-limit blip - retry it. For fully offline or air-gapped builds, download
   the WOFF2 files into `src/app/fonts/` and switch `src/app/layout.tsx` to
   `next/font/local`.
 

@@ -3,7 +3,7 @@
  *
  * Creates an administrator, two client accounts with realistic order history,
  * and a set of certificates covering every status the verification page can
- * render — released, private, revoked — so the whole flow is exercisable
+ * render - released, private, revoked - so the whole flow is exercisable
  * immediately after `npm run db:seed`.
  *
  * Idempotent: re-running updates the fixed accounts rather than duplicating
@@ -100,14 +100,14 @@ BT /F1 9 Tf 60 646 Td (Replace with a real Certificate of Analysis before produc
 /**
  * Writes a placeholder object.
  *
- * Only supports the local driver — seeding into a real Supabase bucket would
+ * Only supports the local driver - seeding into a real Supabase bucket would
  * put fake certificates into production storage, which is exactly the mistake
  * this guard exists to prevent.
  */
 async function writeLocalObject(key: string, body: Buffer): Promise<void> {
   if ((process.env.STORAGE_DRIVER ?? "local") !== "local") {
     console.warn(
-      `  ! STORAGE_DRIVER is not "local" — skipping placeholder PDF for ${key}.\n` +
+      `  ! STORAGE_DRIVER is not "local" - skipping placeholder PDF for ${key}.\n` +
         "    Seeded certificates will have no document behind them.",
     );
     return;
@@ -288,7 +288,7 @@ async function main() {
           },
           {
             status: "TESTING",
-            note: "On instrument — RP-HPLC and LC-MS.",
+            note: "On instrument - RP-HPLC and LC-MS.",
             createdAt: daysAgo(23),
             emailSent: true,
             createdBy: adminEmail,
@@ -515,7 +515,7 @@ async function main() {
       status: "PRIVATE",
       issuedDaysAgo: 0,
       summary:
-        "Awaiting second-analyst review. Not yet released — verification reports this certificate as not found.",
+        "Awaiting second-analyst review. Not yet released - verification reports this certificate as not found.",
       testedFor: [
         "Purity",
         "Identity Confirmation",
@@ -549,7 +549,7 @@ async function main() {
     const issuedDate = daysAgo(spec.issuedDaysAgo);
 
     const pdf = placeholderPdf(
-      `Certificate of Analysis — ${spec.number}`,
+      `Certificate of Analysis - ${spec.number}`,
       `${spec.product} · Batch ${spec.batch} · ${spec.customerName}`,
     );
 
@@ -622,26 +622,26 @@ async function main() {
       dueDate: daysAgo(4),
       paidAt: daysAgo(9),
       lineItems: [
-        { description: "BPC-157 (NP-240612-A) — Purity", amountCents: 20_000 },
+        { description: "BPC-157 (NP-240612-A) - Purity", amountCents: 20_000 },
         {
-          description: "BPC-157 (NP-240612-A) — Identity Confirmation",
+          description: "BPC-157 (NP-240612-A) - Identity Confirmation",
           amountCents: 15_000,
         },
         {
-          description: "BPC-157 (NP-240612-A) — Net Peptide Content",
+          description: "BPC-157 (NP-240612-A) - Net Peptide Content",
           amountCents: 12_500,
         },
-        { description: "Semax (NP-240612-B) — Purity", amountCents: 20_000 },
+        { description: "Semax (NP-240612-B) - Purity", amountCents: 20_000 },
         {
-          description: "Semax (NP-240612-B) — Identity Confirmation",
+          description: "Semax (NP-240612-B) - Identity Confirmation",
           amountCents: 15_000,
         },
         {
-          description: "Semax (NP-240612-B) — Net Peptide Content",
+          description: "Semax (NP-240612-B) - Net Peptide Content",
           amountCents: 12_500,
         },
         {
-          description: "Semax (NP-240612-B) — Elemental Impurities",
+          description: "Semax (NP-240612-B) - Elemental Impurities",
           amountCents: 10_000,
         },
       ],
@@ -660,19 +660,19 @@ async function main() {
       dueDate: new Date(Date.now() + 12 * 86_400_000),
       lineItems: [
         {
-          description: "Retatrutide (HX-2604-11) — Purity",
+          description: "Retatrutide (HX-2604-11) - Purity",
           amountCents: 20_000,
         },
         {
-          description: "Retatrutide (HX-2604-11) — Identity Confirmation",
+          description: "Retatrutide (HX-2604-11) - Identity Confirmation",
           amountCents: 15_000,
         },
         {
-          description: "Retatrutide (HX-2604-11) — Net Peptide Content",
+          description: "Retatrutide (HX-2604-11) - Net Peptide Content",
           amountCents: 12_500,
         },
         {
-          description: "Retatrutide (HX-2604-11) — Bacterial Endotoxins",
+          description: "Retatrutide (HX-2604-11) - Bacterial Endotoxins",
           amountCents: 17_500,
         },
         {

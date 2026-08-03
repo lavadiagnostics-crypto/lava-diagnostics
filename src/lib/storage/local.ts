@@ -5,7 +5,7 @@ import type { StorageDriver } from "@/lib/storage";
 /**
  * Development storage driver.
  *
- * Writes to `./.storage`, which is gitignored and — critically — is NOT inside
+ * Writes to `./.storage`, which is gitignored and - critically - is NOT inside
  * `public/`, so Next will never serve these files statically. Bytes are only
  * reachable through the authorised download route, exactly as in production.
  *
@@ -58,7 +58,7 @@ export function localDriver(): StorageDriver {
           try {
             await unlink(resolveKey(key));
           } catch {
-            // Already gone — deletion is idempotent.
+            // Already gone - deletion is idempotent.
           }
         }),
       );

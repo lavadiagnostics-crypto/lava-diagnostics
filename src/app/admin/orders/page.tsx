@@ -48,7 +48,7 @@ export default async function AdminOrdersPage({
 
   const params = await searchParams;
 
-  // Only accept a status we actually recognise — an arbitrary value would
+  // Only accept a status we actually recognise - an arbitrary value would
   // otherwise reach Prisma as an invalid enum.
   const status =
     params.status && STATUS_FILTERS.includes(params.status as OrderStatus)
@@ -244,7 +244,7 @@ export default async function AdminOrdersPage({
                     </TableCell>
                     <TableCell className="tabular text-center text-sm">
                       {order._count.certificates || (
-                        <span className="text-muted-foreground">—</span>
+                        <span className="text-muted-foreground"> - </span>
                       )}
                     </TableCell>
                     <TableCell>

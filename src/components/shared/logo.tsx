@@ -5,7 +5,7 @@ import { BRAND } from "@/lib/constants";
 /**
  * Wordmark.
  *
- * The mark is a stylised lava flow inside a rounded square — drawn inline as
+ * The mark is a stylised lava flow inside a rounded square - drawn inline as
  * SVG so it inherits colour, needs no network request, and stays crisp at any
  * size.
  */
@@ -65,7 +65,7 @@ export function Logo({
     <Link
       href={href}
       className="rounded-xl transition-opacity hover:opacity-85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
-      aria-label={`${BRAND.name} — home`}
+      aria-label={`${BRAND.name} - home`}
     >
       {content}
     </Link>

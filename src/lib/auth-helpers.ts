@@ -7,7 +7,7 @@ import type { Session } from "next-auth";
  * Authorisation helpers used by every server action, route handler and
  * protected page.
  *
- * Middleware is not treated as sufficient — a server action is reachable by
+ * Middleware is not treated as sufficient - a server action is reachable by
  * direct POST regardless of which page rendered it, so each one calls into here.
  */
 
@@ -86,7 +86,7 @@ export async function assertAdmin(): Promise<{
 /**
  * Resolves the Customer record owned by the signed-in user.
  *
- * Every customer-facing query must be scoped by the id this returns — it is the
+ * Every customer-facing query must be scoped by the id this returns - it is the
  * tenancy boundary. Never accept a customerId from a request payload.
  */
 export async function requireCustomer(returnTo?: string): Promise<{

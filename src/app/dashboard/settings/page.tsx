@@ -144,7 +144,7 @@ export default async function CustomerSettingsPage() {
           <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">
             You can request access to, correction of, or deletion of your personal
             information at any time. Note that an issued analytical record cannot
-            be deleted within its seven-year retention period — doing so would
+            be deleted within its seven-year retention period - doing so would
             break the certificate register that third parties rely on when
             verifying your documents.
           </p>

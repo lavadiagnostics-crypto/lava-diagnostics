@@ -14,14 +14,14 @@ import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit";
 import type { Certificate } from "@prisma/client";
 
 /**
- * Certificate verification — the security-critical path of this application.
+ * Certificate verification - the security-critical path of this application.
  *
  * ── Access paths ─────────────────────────────────────────────────────────────
  *
- *   A. Token lookup — the caller presents the 160-bit `verificationToken`.
+ *   A. Token lookup - the caller presents the 160-bit `verificationToken`.
  *      This is what a QR scan does. Unguessable, so it is sufficient alone.
  *
- *   B. Certificate-number lookup — the caller presents `LAVA-2026-000184`.
+ *   B. Certificate-number lookup - the caller presents `LAVA-2026-000184`.
  *      This is the flow a downstream buyer uses when all they have is the
  *      number printed on a label, and it is the flow the product spec
  *      specifies. See the policy note below.
@@ -40,7 +40,7 @@ import type { Certificate } from "@prisma/client";
  *      approaches the threshold. This is the control that actually defeats
  *      enumeration.
  *   3. Nothing enumerable is returned. Every function here resolves to at most
- *      ONE certificate — there is no list endpoint, no wildcard, no pagination.
+ *      ONE certificate - there is no list endpoint, no wildcard, no pagination.
  *      A browsable directory is impossible by construction, not by policy.
  *
  * Deployments that would rather trade that UX for strictness can set
@@ -163,7 +163,7 @@ async function checkRateLimits(
  * Referer headers, browser history, proxy logs and copy-pasted links.
  *
  * Next 15 only permits cookie mutation inside a Server Action or Route Handler,
- * so this silently no-ops when called during a page render — which is exactly
+ * so this silently no-ops when called during a page render - which is exactly
  * what happens on the QR-scan path, where `/verify/[token]` renders directly.
  * That path is not left unauthorised: the PDF route independently accepts the
  * verification token, which the visitor demonstrably already holds because it is
@@ -180,7 +180,7 @@ async function issueGrantCookie(certificateId: string): Promise<void> {
       maxAge: GRANT_TTL_SECONDS,
     });
   } catch {
-    // Rendering context — the token-based path in the PDF route covers this.
+    // Rendering context - the token-based path in the PDF route covers this.
   }
 }
 
@@ -253,7 +253,7 @@ export async function verifyCertificate(
       where: { certificateNumber: number },
     });
   } else if (code) {
-    // A bare code is treated as a token — this is what a client pastes from
+    // A bare code is treated as a token - this is what a client pastes from
     // their COA-ready email.
     method = "code_as_token";
     certificate = await prisma.certificate.findUnique({
@@ -316,8 +316,7 @@ export async function verifyCertificate(
  * session, so a page refresh neither consumes a rate-limit slot nor
  * re-increments the view counter.
  *
- * Returns null unless the grant is valid AND the certificate is still released —
- * a certificate revoked after the grant was issued stops working immediately.
+ * Returns null unless the grant is valid AND the certificate is still released - * a certificate revoked after the grant was issued stops working immediately.
  */
 export async function certificateFromActiveGrant(
   certificateId: string,

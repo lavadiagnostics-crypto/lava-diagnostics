@@ -4,8 +4,7 @@ import { prisma } from "@/lib/prisma";
 /**
  * Human-readable reference generation.
  *
- * Certificate numbers are intentionally readable and roughly sequential —
- * clients quote them on purchase orders and printed paperwork. That makes them
+ * Certificate numbers are intentionally readable and roughly sequential - * clients quote them on purchase orders and printed paperwork. That makes them
  * guessable, which is fine ONLY because a certificate number alone never opens
  * a certificate: the verification flow additionally requires the 160-bit
  * `verificationToken`. See lib/certificates/verify.ts.
@@ -21,7 +20,7 @@ const TOKEN_ALPHABET =
 /**
  * 160 bits of cryptographically secure randomness, rendered in a URL-safe
  * alphabet. This is the bearer secret embedded in the QR code. At this size,
- * brute-forcing is infeasible even without rate limiting — but the endpoint is
+ * brute-forcing is infeasible even without rate limiting - but the endpoint is
  * rate-limited anyway.
  */
 export function generateVerificationToken(length = 28): string {

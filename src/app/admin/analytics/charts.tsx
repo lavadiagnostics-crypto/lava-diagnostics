@@ -173,7 +173,7 @@ export function RevenueChart({
   );
 }
 
-/** Semantic colours — PASS green, FAIL red, INCONCLUSIVE amber. */
+/** Semantic colours - PASS green, FAIL red, INCONCLUSIVE amber. */
 const RESULT_COLOURS: Record<string, string> = {
   Pass: "hsl(152 62% 40%)",
   Fail: "hsl(0 74% 52%)",

@@ -191,7 +191,7 @@ export default async function AdminSettingsPage() {
           <dl className="grid gap-6 sm:grid-cols-2">
             <DataField label="Certificate number alone">
               {VERIFY_POLICY.requireCodeWithNumber ? (
-                <Badge variant="pass">Blocked — code also required</Badge>
+                <Badge variant="pass">Blocked - code also required</Badge>
               ) : (
                 <Badge variant="primary">Permitted</Badge>
               )}
@@ -321,7 +321,7 @@ export default async function AdminSettingsPage() {
             <DataField label="Oldest certificate">
               {oldestCertificate
                 ? formatDate(oldestCertificate.createdAt)
-                : "—"}
+                : "-"}
             </DataField>
             <DataField label="Certificate retention">7 years minimum</DataField>
             <DataField label="Verification log retention">12 months</DataField>

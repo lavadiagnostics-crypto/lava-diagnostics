@@ -21,7 +21,7 @@ import { formatCents, formatDate, relativeTime } from "@/lib/utils";
 export default async function DashboardOverviewPage() {
   const { customerId, companyName } = await requireCustomer("/dashboard");
 
-  // Every query below is scoped by customerId — the tenancy boundary.
+  // Every query below is scoped by customerId - the tenancy boundary.
   const [
     activeOrders,
     completedOrders,
@@ -259,7 +259,7 @@ export default async function DashboardOverviewPage() {
               </h2>
               <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
                 Share the certificate number or QR code and anyone can confirm it
-                is genuine — without needing an account, and without being able to
+                is genuine - without needing an account, and without being able to
                 see any of your other certificates.
               </p>
             </div>

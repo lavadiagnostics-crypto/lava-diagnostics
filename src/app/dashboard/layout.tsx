@@ -20,7 +20,7 @@ export const metadata: Metadata = {
  * Client portal shell.
  *
  * `requireCustomer` both authenticates and resolves the tenancy boundary. Every
- * page below scopes its queries by the customerId it returns — never by an id
+ * page below scopes its queries by the customerId it returns - never by an id
  * taken from the URL or a form.
  */
 export default async function DashboardLayout({

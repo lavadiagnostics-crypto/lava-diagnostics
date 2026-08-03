@@ -128,7 +128,7 @@ export default async function AdminAuditPage({
                         </p>
                       </TableCell>
                       <TableCell className="text-[13px] text-muted-foreground">
-                        {entry.entity ?? "—"}
+                        {entry.entity ?? "-"}
                       </TableCell>
                       <TableCell className="max-w-[280px] pr-6">
                         {metadata ? (
@@ -139,9 +139,7 @@ export default async function AdminAuditPage({
                               .join(" · ")}
                           </p>
                         ) : (
-                          <span className="text-[13px] text-muted-foreground">
-                            —
-                          </span>
+                          <span className="text-[13px] text-muted-foreground"> - </span>
                         )}
                       </TableCell>
                     </TableRow>

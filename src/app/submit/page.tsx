@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 /**
  * Submission entry point.
  *
- * Open to anonymous visitors — requiring an account before a first order is a
+ * Open to anonymous visitors - requiring an account before a first order is a
  * needless barrier. Signed-in clients get their details pre-filled.
  */
 export default async function SubmitPage() {

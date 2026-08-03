@@ -42,8 +42,8 @@ import type { CertificateStatus } from "@prisma/client";
  * Certificate lifecycle actions.
  *
  * Destructive and disclosure-changing actions require an explicit confirmation
- * dialog. Releasing in particular is irreversible in effect — once a certificate
- * has been verifiable, third parties may have recorded its contents — so the
+ * dialog. Releasing in particular is irreversible in effect - once a certificate
+ * has been verifiable, third parties may have recorded its contents - so the
  * copy says so rather than presenting it as a toggle.
  */
 export function LifecycleControls({
@@ -160,7 +160,7 @@ export function LifecycleControls({
           </Button>
           <p className="mt-2.5 text-[13px] leading-relaxed text-muted-foreground">
             Verification will report this certificate as not found. Use this to
-            correct a premature release — use <strong>Revoke</strong> if the
+            correct a premature release - use <strong>Revoke</strong> if the
             document itself is wrong and copies are in circulation.
           </p>
         </div>
@@ -386,7 +386,7 @@ export function LifecycleControls({
             <DialogTitle>Delete {certificateNumber} permanently?</DialogTitle>
             <DialogDescription>
               This removes the record and its stored files entirely and cannot be
-              undone. Only do this for a genuine mistake — an upload against the
+              undone. Only do this for a genuine mistake - an upload against the
               wrong client, or a test record.
             </DialogDescription>
           </DialogHeader>

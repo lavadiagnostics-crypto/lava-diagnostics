@@ -21,7 +21,7 @@ export interface ActionResult {
  * Handles a public contact-form submission.
  *
  * Rate-limited and honeypot-guarded. Note that the honeypot path returns a
- * success response without persisting anything — telling a bot it was detected
+ * success response without persisting anything - telling a bot it was detected
  * only helps it adapt.
  */
 export async function submitContactForm(
@@ -40,7 +40,7 @@ export async function submitContactForm(
 
   // Honeypot tripped: pretend it worked, store nothing.
   if (data.website && data.website.length > 0) {
-    return { ok: true, message: "Thank you — your message has been received." };
+    return { ok: true, message: "Thank you - your message has been received." };
   }
 
   const ipHash = hashIp(await clientIp());
@@ -104,7 +104,7 @@ export async function submitContactForm(
     return {
       ok: true,
       message:
-        "Thank you — your message has reached the laboratory. We typically reply within one business day.",
+        "Thank you - your message has reached the laboratory. We typically reply within one business day.",
     };
   } catch (error) {
     console.error("[contact] failed to store enquiry", error);

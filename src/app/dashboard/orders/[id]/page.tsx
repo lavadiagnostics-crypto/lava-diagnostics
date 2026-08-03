@@ -53,7 +53,7 @@ export default async function CustomerOrderDetailPage({
 
   /*
    * Scoped by customerId as well as id. Without the customerId clause, a client
-   * could read another client's order by guessing its cuid — the URL parameter
+   * could read another client's order by guessing its cuid - the URL parameter
    * is untrusted input, and this is the check that makes it safe.
    */
   const order = await prisma.order.findFirst({
@@ -238,7 +238,7 @@ export default async function CustomerOrderDetailPage({
                         {sample.batchNumber}
                       </DataField>
                       <DataField label="Strength">
-                        {sample.strength || "—"}
+                        {sample.strength || "-"}
                       </DataField>
                       <DataField label="Vials">
                         <span className="tabular">{sample.quantity}</span>

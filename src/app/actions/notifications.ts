@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
  * Marks notifications read.
  *
  * The update is scoped by the caller's own customerId, so passing another
- * client's notification ids does nothing — `updateMany` simply matches zero
+ * client's notification ids does nothing - `updateMany` simply matches zero
  * rows rather than leaking or modifying anything.
  */
 export async function markNotificationsRead(ids: string[]): Promise<void> {

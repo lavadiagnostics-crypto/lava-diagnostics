@@ -39,7 +39,7 @@ export default async function NotificationsPage() {
 
       {/*
         Marks the visible notifications read from the client after paint, rather
-        than as a side effect of rendering — a GET that mutates state would
+        than as a side effect of rendering - a GET that mutates state would
         misbehave under prefetch and back-navigation.
       */}
       {unreadIds.length > 0 ? (
@@ -54,7 +54,7 @@ export default async function NotificationsPage() {
           className="mt-9"
           icon={Bell}
           title="Nothing to report"
-          description="When an order changes status or a certificate is released, you will see it here — and receive an email."
+          description="When an order changes status or a certificate is released, you will see it here - and receive an email."
         />
       ) : (
         <ul className="mt-9 space-y-3">

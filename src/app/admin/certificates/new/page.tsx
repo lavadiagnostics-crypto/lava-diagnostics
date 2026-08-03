@@ -23,7 +23,7 @@ export default async function NewCertificatePage({
     }),
     /*
      * Orders that could plausibly need a certificate. Excludes rejected and
-     * cancelled work, and caps the list — the selector is a convenience, not a
+     * cancelled work, and caps the list - the selector is a convenience, not a
      * browsable archive.
      */
     prisma.order.findMany({

@@ -92,7 +92,7 @@ export function SubmissionForm({
   /**
    * Live pricing.
    *
-   * Recomputed on every render from the watched values — the calculation is
+   * Recomputed on every render from the watched values - the calculation is
    * trivial arithmetic over a handful of samples, so memoising it would add more
    * complexity than it saves. The server recomputes this independently.
    */

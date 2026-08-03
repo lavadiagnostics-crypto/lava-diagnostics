@@ -8,7 +8,7 @@ import { serverEnv } from "@/lib/env";
  * without an API key.
  *
  * Sends never throw. A failed notification must not roll back the state change
- * that triggered it — an admin marking an order COMPLETED should succeed even
+ * that triggered it - an admin marking an order COMPLETED should succeed even
  * if the mail provider is down. Callers receive `{ ok: false }` and the failure
  * is recorded on the OrderEvent so it can be retried.
  */

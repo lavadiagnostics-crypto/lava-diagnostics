@@ -29,9 +29,9 @@ export function formatDate(
   value: Date | string | null | undefined,
   opts: Intl.DateTimeFormatOptions = {},
 ): string {
-  if (!value) return "—";
+  if (!value) return "-";
   const date = typeof value === "string" ? new Date(value) : value;
-  if (Number.isNaN(date.getTime())) return "—";
+  if (Number.isNaN(date.getTime())) return "-";
   return new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",
     month: "short",
@@ -42,7 +42,7 @@ export function formatDate(
 }
 
 export function formatDateTime(value: Date | string | null | undefined): string {
-  if (!value) return "—";
+  if (!value) return "-";
   return formatDate(value, { hour: "2-digit", minute: "2-digit" });
 }
 
@@ -76,7 +76,7 @@ export function initials(name: string): string {
 }
 
 export function formatBytes(bytes: number | null | undefined): string {
-  if (!bytes) return "—";
+  if (!bytes) return "-";
   const units = ["B", "KB", "MB", "GB"];
   let value = bytes;
   let unit = 0;

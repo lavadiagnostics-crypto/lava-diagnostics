@@ -310,7 +310,7 @@ export default async function AdminAnalyticsPage() {
         </div>
 
         <p className="mt-6 rounded-2xl border border-border bg-muted/40 p-4 text-[13px] leading-relaxed text-muted-foreground">
-          A sustained high failure rate can indicate an enumeration attempt — the
+          A sustained high failure rate can indicate an enumeration attempt - the
           verification endpoint locks out an address after repeated failures
           within an hour. It can equally indicate a certificate number printed
           incorrectly on physical documentation, so check recent releases before

@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 /**
  * Dashboard metric tile.
  *
- * The trend arrow is only rendered when a delta is supplied — a tile showing
+ * The trend arrow is only rendered when a delta is supplied - a tile showing
  * "0%" with no comparison period is noise, not information.
  */
 export function StatTile({

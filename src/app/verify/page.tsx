@@ -38,7 +38,7 @@ export default async function VerifyPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   // Pre-fills the field when arriving from a link. Never performs the lookup
-  // automatically — verification is always an explicit action.
+  // automatically - verification is always an explicit action.
   const { q } = await searchParams;
 
   return (
@@ -57,7 +57,7 @@ export default async function VerifyPage({
             <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground">
               Enter the certificate number, paste a verification code, or scan the
               QR code printed on the document. Results come straight from our
-              records — not from the file in your hand.
+              records - not from the file in your hand.
             </p>
           </Reveal>
         </div>
@@ -97,7 +97,7 @@ export default async function VerifyPage({
                 Certificate will not verify?
               </h2>
               <p className="mt-2.5 text-sm leading-relaxed text-muted-foreground">
-                Check the reference character by character first — O against 0 and
+                Check the reference character by character first - O against 0 and
                 I against 1 account for most failed lookups. If it is definitely
                 correct as printed, the certificate was not issued by us, and you
                 should treat the document with suspicion.

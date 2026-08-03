@@ -35,7 +35,7 @@ import { fullSubmissionSchema } from "@/lib/validations/submission";
  *    order without samples or an orphaned reference number.
  *  • Anonymous submission is permitted (a customer record is created or reused
  *    by email), but an authenticated submission is always bound to the session's
- *    own customer — a signed-in user cannot submit against someone else's
+ *    own customer - a signed-in user cannot submit against someone else's
  *    account by supplying a different address.
  */
 
@@ -281,7 +281,7 @@ export async function createSubmission(
               (s, i) =>
                 `${i + 1}. ${s.productName} (batch ${s.batchNumber}, ${s.quantity} vial${
                   s.quantity === 1 ? "" : "s"
-                }) — ${selectedTestLabels(s.tests as Record<string, boolean>).join(", ")}`,
+                }) - ${selectedTestLabels(s.tests as Record<string, boolean>).join(", ")}`,
             )
             .join("\n"),
           ...(data.specialInstructions

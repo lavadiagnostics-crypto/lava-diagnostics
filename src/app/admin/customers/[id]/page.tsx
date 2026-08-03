@@ -289,7 +289,7 @@ export default async function AdminCustomerDetailPage({
             <div>
               <p className="overline mb-2">Shipping</p>
               <address className="text-[13px] not-italic leading-relaxed text-muted-foreground">
-                {customer.shippingLine1 ?? "—"}
+                {customer.shippingLine1 ?? "-"}
                 {customer.shippingLine2 ? (
                   <>
                     <br />
@@ -316,7 +316,7 @@ export default async function AdminCustomerDetailPage({
             <div className="mt-5 border-t border-border pt-5">
               <p className="overline mb-2">Billing</p>
               <address className="text-[13px] not-italic leading-relaxed text-muted-foreground">
-                {customer.billingLine1 ?? "—"}
+                {customer.billingLine1 ?? "-"}
                 {customer.billingCity ? (
                   <>
                     <br />

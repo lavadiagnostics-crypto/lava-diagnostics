@@ -238,13 +238,13 @@ export default async function AdminOrderDetailPage({
 
                     <dl className="mt-4 grid gap-4 sm:grid-cols-3">
                       <DataField label="Strength">
-                        {sample.strength || "—"}
+                        {sample.strength || "-"}
                       </DataField>
                       <DataField label="Vials submitted">
                         <span className="tabular">{sample.quantity}</span>
                       </DataField>
                       <DataField label="Expected peptide">
-                        {sample.expectedPeptide || "—"}
+                        {sample.expectedPeptide || "-"}
                       </DataField>
                     </dl>
 

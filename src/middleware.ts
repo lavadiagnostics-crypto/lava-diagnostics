@@ -4,7 +4,7 @@ import { authConfig } from "@/auth.config";
 /**
  * Edge middleware guarding /admin and /dashboard.
  *
- * First line of defence only — the `authorized` callback in auth.config.ts
+ * First line of defence only - the `authorized` callback in auth.config.ts
  * decides. Server actions and route handlers repeat the check independently.
  */
 export const { auth: middleware } = NextAuth(authConfig);

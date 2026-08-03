@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { TooltipProvider } from "@/components/ui/misc";
@@ -7,15 +7,26 @@ import { BRAND } from "@/lib/constants";
 import { appUrl } from "@/lib/env";
 import "./globals.css";
 
-const inter = Inter({
+/**
+ * Type pairing.
+ *
+ * Instrument Sans is a slightly condensed grotesk with a tall x-height. It sets
+ * dense technical copy at small sizes without the neutrality of the usual
+ * default, and its tighter widths let long analytical headlines hold two lines
+ * instead of three.
+ *
+ * IBM Plex Mono carries every number on the site: certificate references, batch
+ * numbers, masses, purity percentages, hashes. Numerals are the load-bearing
+ * content of a laboratory report, so they get a face designed to be compared
+ * vertically rather than merely read.
+ */
+const sans = Instrument_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
-  // Loaded as a variable font so weights 300–800 cost one file.
-  axes: ["opsz"],
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
@@ -25,7 +36,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(appUrl()),
   title: {
-    default: `${BRAND.name} — ${BRAND.tagline}`,
+    default: `${BRAND.name} - ${BRAND.tagline}`,
     template: `%s · ${BRAND.name}`,
   },
   description:
@@ -42,14 +53,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: BRAND.name,
-    title: `${BRAND.name} — ${BRAND.tagline}`,
+    title: `${BRAND.name} - ${BRAND.tagline}`,
     description:
       "Independent third-party analytical testing for research peptides, with verifiable Certificates of Analysis.",
     url: appUrl(),
   },
   twitter: {
     card: "summary_large_image",
-    title: `${BRAND.name} — ${BRAND.tagline}`,
+    title: `${BRAND.name} - ${BRAND.tagline}`,
     description:
       "Independent third-party analytical testing for research peptides.",
   },
@@ -81,7 +92,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${mono.variable} font-sans`}>
+      <body className={`${sans.variable} ${mono.variable} font-sans`}>
         <ThemeProvider>
           <TooltipProvider delayDuration={280}>
             {children}

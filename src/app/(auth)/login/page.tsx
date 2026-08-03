@@ -26,7 +26,7 @@ export default async function LoginPage({
 }) {
   const { next, error } = await searchParams;
 
-  // Already signed in — send them where they were trying to go.
+  // Already signed in - send them where they were trying to go.
   const session = await auth();
   if (session?.user) {
     redirect(session.user.role === "ADMIN" ? "/admin" : "/dashboard");

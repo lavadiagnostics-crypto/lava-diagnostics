@@ -3,8 +3,8 @@ import { z } from "zod";
 /**
  * Certificate schemas.
  *
- * The verify schema is intentionally permissive about *format* — it accepts
- * anything that could plausibly be a reference — and strict about *length*. Any
+ * The verify schema is intentionally permissive about *format* - it accepts
+ * anything that could plausibly be a reference - and strict about *length*. Any
  * real filtering happens as an exact database match, so a malformed query and a
  * non-existent certificate are indistinguishable to the caller.
  */
@@ -74,6 +74,6 @@ export const revokeSchema = z.object({
   reason: z
     .string()
     .trim()
-    .min(10, "Give a reason of at least 10 characters — it is shown on the verification page.")
+    .min(10, "Give a reason of at least 10 characters - it is shown on the verification page.")
     .max(500),
 });

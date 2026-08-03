@@ -11,7 +11,7 @@ import { storage } from "@/lib/storage";
  * This is the ONLY route that returns certificate bytes, and it is the reason
  * object storage can stay private. Three things are true of every response:
  *
- *   1. The caller proved entitlement before reaching here — by holding a signed
+ *   1. The caller proved entitlement before reaching here - by holding a signed
  *      grant cookie issued by a successful verification, by presenting the
  *      certificate's own verification token, or by being the owning customer or
  *      an administrator.
@@ -20,7 +20,7 @@ import { storage } from "@/lib/storage";
  *   3. Nothing is cacheable. A shared cache holding a certificate PDF would
  *      undo the access control entirely.
  *
- * A missing grant returns 404, not 403 — a 403 would confirm the certificate
+ * A missing grant returns 404, not 403 - a 403 would confirm the certificate
  * exists, which is exactly what the verification model refuses to disclose.
  */
 
@@ -65,7 +65,7 @@ export async function GET(
   const store = await cookies();
   const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
   if (grant?.certificateId === certificate.id) {
-    // A grant does not survive revocation — status is re-checked here, not
+    // A grant does not survive revocation - status is re-checked here, not
     // trusted from when the grant was minted.
     if (certificate.status === "VERIFIED") {
       authorised = true;
@@ -100,7 +100,7 @@ export async function GET(
     const session = await auth();
     if (session?.user) {
       if (session.user.role === "ADMIN") {
-        // Admins may read a PRIVATE certificate — that is the review workflow.
+        // Admins may read a PRIVATE certificate - that is the review workflow.
         authorised = true;
         via = "admin";
       } else if (

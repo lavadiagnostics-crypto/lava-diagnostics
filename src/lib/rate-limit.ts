@@ -6,10 +6,10 @@ import { prisma } from "@/lib/prisma";
  *
  * Three tiers, chosen automatically:
  *
- *  1. Upstash Redis — correct across instances. Used when configured.
- *  2. Postgres — correct across instances, higher latency. Used as the fallback
+ *  1. Upstash Redis - correct across instances. Used when configured.
+ *  2. Postgres - correct across instances, higher latency. Used as the fallback
  *     so that a multi-instance deployment without Redis is still protected.
- *  3. In-process Map — only when the database write itself fails, so that a
+ *  3. In-process Map - only when the database write itself fails, so that a
  *     transient DB error cannot become an open door.
  *
  * The verification endpoint is the primary consumer: without a limit here, an

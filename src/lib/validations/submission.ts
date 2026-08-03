@@ -5,7 +5,7 @@ import { MAX_ADDITIONAL_COA_NAMES, TEST_CATALOG } from "@/lib/pricing";
  * Sample submission schemas.
  *
  * Shared by the client form (per-step validation) and the server action (full
- * re-validation). The server never trusts a client-computed price — only the
+ * re-validation). The server never trusts a client-computed price - only the
  * test selections below are read, and totals are recomputed from them.
  */
 
@@ -23,7 +23,7 @@ const addressSchema = z.object({
  *
  * Deliberately NOT `addressSchema.partial()`. `.partial()` permits a key to be
  * *absent*, but the form seeds billing with empty strings, and an empty string
- * is present — so `.partial()` would run `line1: min(3)` against `""` and fail.
+ * is present - so `.partial()` would run `line1: min(3)` against `""` and fail.
  * Those failures would attach to billing fields that are hidden whenever
  * "same as shipping" is ticked, leaving the user on a form that refuses to
  * advance with nothing visibly wrong.
@@ -54,7 +54,7 @@ export const contactStepSchema = z
       .string()
       .trim()
       .toLowerCase()
-      .email("Enter a valid email address — your COA is sent here."),
+      .email("Enter a valid email address - your COA is sent here."),
     phone: z.string().trim().min(6, "Enter a contact phone number.").max(40),
     vatNumber: z.string().trim().max(60).optional().or(z.literal("")),
     marketingOptIn: z.boolean().default(false),
@@ -106,7 +106,7 @@ export const sampleSchema = z
     notes: z.string().trim().max(1000).optional().or(z.literal("")),
   })
   .superRefine((data, ctx) => {
-    // Photography is free and cannot be the only thing ordered — there would be
+    // Photography is free and cannot be the only thing ordered - there would be
     // no analysis to certify.
     const billable = TEST_CATALOG.filter(
       (t) => t.key !== "photo" && data.tests[t.key],

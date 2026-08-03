@@ -17,7 +17,7 @@ export const BRAND = {
     postalCode: "37209",
     country: "United States",
   },
-  hours: "Monday – Friday, 08:00 – 18:00 CT",
+  hours: "Monday - Friday, 08:00-18:00 CT",
 } as const;
 
 export const MAIN_NAV = [
@@ -127,7 +127,7 @@ export const SERVICE_CARDS = [
     title: "Net Content",
     subtitle: "Quantitative peptide assay",
     description:
-      "Absolute active peptide mass per vial against a certified reference standard — the difference between what the label claims and what the vial delivers.",
+      "Absolute active peptide mass per vial against a certified reference standard - the difference between what the label claims and what the vial delivers.",
     metric: "± 2%",
     metricLabel: "Repeatability",
   },
@@ -162,7 +162,7 @@ export const HOW_IT_WORKS = [
     step: 5,
     title: "Verify Online",
     description:
-      "Anyone holding your certificate can confirm its authenticity instantly — scan the QR code or enter the certificate number.",
+      "Anyone holding your certificate can confirm its authenticity instantly - scan the QR code or enter the certificate number.",
   },
 ] as const;
 
@@ -199,7 +199,7 @@ export const FAQS = [
   {
     question: "What do I need to send you?",
     answer:
-      "Send your samples in crimped, unopened vials. Some assays — sterility and bacterial endotoxins in particular — consume a dedicated vial and cannot share material with other tests, so the submission form tells you exactly how many vials to ship as you build your order.",
+      "Send your samples in crimped, unopened vials. Some assays - sterility and bacterial endotoxins in particular - consume a dedicated vial and cannot share material with other tests, so the submission form tells you exactly how many vials to ship as you build your order.",
   },
   {
     question: "Whose name appears on the Certificate of Analysis?",
@@ -209,7 +209,7 @@ export const FAQS = [
   {
     question: "How does certificate verification work?",
     answer:
-      "Every certificate we issue carries a unique certificate number and a QR code. Scanning the QR code or entering the certificate number on our verification page returns that specific certificate. There is no public directory of certificates and no way to browse them — a certificate can only be retrieved by someone who already holds its number or QR code.",
+      "Every certificate we issue carries a unique certificate number and a QR code. Scanning the QR code or entering the certificate number on our verification page returns that specific certificate. There is no public directory of certificates and no way to browse them - a certificate can only be retrieved by someone who already holds its number or QR code.",
   },
   {
     question: "What happens if a sample fails?",
@@ -229,7 +229,7 @@ export const FAQS = [
   {
     question: "Do you offer accredited testing?",
     answer:
-      "Our methods are validated in accordance with ICH Q2(R2) and performed under a documented quality system. Where a compendial method exists — USP <71>, <85>, <232>/<233> and <467> — we follow it. Contact the laboratory directly for our current accreditation schedule and scope documentation.",
+      "Our methods are validated in accordance with ICH Q2(R2) and performed under a documented quality system. Where a compendial method exists - USP <71>, <85>, <232>/<233> and <467> - we follow it. Contact the laboratory directly for our current accreditation schedule and scope documentation.",
   },
 ] as const;
 
@@ -252,7 +252,7 @@ export const KNOWLEDGE_ARTICLES = [
       {
         heading: "Purity is an area percentage, not a promise",
         paragraphs: [
-          "Chromatographic purity is reported as the area of the main peak as a percentage of total integrated peak area, at a stated detection wavelength. A result of 99.2% means the main peak accounted for 99.2% of what the detector saw — it does not mean the vial is 99.2% peptide by mass.",
+          "Chromatographic purity is reported as the area of the main peak as a percentage of total integrated peak area, at a stated detection wavelength. A result of 99.2% means the main peak accounted for 99.2% of what the detector saw - it does not mean the vial is 99.2% peptide by mass.",
           "That distinction matters commercially. A sample can be 99% pure by HPLC and still contain far less peptide than the label claims, because the remaining mass is water, counter-ions, acetate or mannitol rather than impurity. Purity and net peptide content are different questions and need different assays.",
         ],
       },
@@ -266,7 +266,7 @@ export const KNOWLEDGE_ARTICLES = [
       {
         heading: "The three misreadings",
         paragraphs: [
-          "First, treating purity as content — covered above, and by far the most consequential. Second, reading 'not detected' as 'zero': every method has a limit of quantitation, and 'not detected' means 'below that limit', which the certificate should state. Third, assuming a passing sterility result applies to a vial that was opened after testing; sterility is destroyed by the first non-aseptic entry.",
+          "First, treating purity as content - covered above, and by far the most consequential. Second, reading 'not detected' as 'zero': every method has a limit of quantitation, and 'not detected' means 'below that limit', which the certificate should state. Third, assuming a passing sterility result applies to a vial that was opened after testing; sterility is destroyed by the first non-aseptic entry.",
         ],
       },
     ],
@@ -295,7 +295,7 @@ export const KNOWLEDGE_ARTICLES = [
       {
         heading: "Which to order",
         paragraphs: [
-          "If you are qualifying a supplier or investigating a suspected substitution, order purity and identity. If you are calibrating an experiment, or your customers dose by mass, order net peptide content as well — it is the only result that quantifies the active substance per vial.",
+          "If you are qualifying a supplier or investigating a suspected substitution, order purity and identity. If you are calibrating an experiment, or your customers dose by mass, order net peptide content as well - it is the only result that quantifies the active substance per vial.",
           "For release testing on material you resell, we recommend all three. The combination is what lets you make a defensible label claim rather than repeating your supplier's.",
         ],
       },
@@ -312,7 +312,7 @@ export const KNOWLEDGE_ARTICLES = [
       {
         heading: "The first entry ends sterility",
         paragraphs: [
-          "A sterility test asks whether viable organisms are present in a sealed container. The moment a vial is entered for any other purpose — drawing material for HPLC, reconstituting for mass spectrometry — that question can no longer be answered, because any subsequent growth cannot be attributed to the original contents rather than the act of entry.",
+          "A sterility test asks whether viable organisms are present in a sealed container. The moment a vial is entered for any other purpose - drawing material for HPLC, reconstituting for mass spectrometry - that question can no longer be answered, because any subsequent growth cannot be attributed to the original contents rather than the act of entry.",
           "This is why USP <71> is performed on intact, unopened units, and why a sterility result on a vial that was previously sampled for another assay would be scientifically meaningless regardless of the outcome.",
         ],
       },
@@ -343,20 +343,20 @@ export const KNOWLEDGE_ARTICLES = [
         heading: "A PDF proves nothing by itself",
         paragraphs: [
           "Any competent forger can reproduce a laboratory's letterhead, and editing a number in a PDF takes seconds. A certificate you were emailed by the party who benefits from its contents deserves independent confirmation.",
-          "Every certificate LAVA issues carries a unique certificate number and a QR code that resolves to our verification page. What you see there is served from our database, not from the document in your hand — so if the two disagree, the document has been altered.",
+          "Every certificate LAVA issues carries a unique certificate number and a QR code that resolves to our verification page. What you see there is served from our database, not from the document in your hand - so if the two disagree, the document has been altered.",
         ],
       },
       {
         heading: "What verification tells you",
         paragraphs: [
-          "A successful verification confirms four things: that we issued a certificate under that number, which party we issued it to, which product and batch it covers, and what result we recorded. It also displays a certificate hash — a fingerprint computed over the document's immutable fields and the PDF bytes at the moment of issue.",
-          "If the certificate number returns nothing, we did not issue it. There is no public list of our certificates and no way to browse them, so a certificate that fails to verify is not merely 'unlisted' — it does not exist in our records.",
+          "A successful verification confirms four things: that we issued a certificate under that number, which party we issued it to, which product and batch it covers, and what result we recorded. It also displays a certificate hash - a fingerprint computed over the document's immutable fields and the PDF bytes at the moment of issue.",
+          "If the certificate number returns nothing, we did not issue it. There is no public list of our certificates and no way to browse them, so a certificate that fails to verify is not merely 'unlisted' - it does not exist in our records.",
         ],
       },
       {
         heading: "Revoked certificates",
         paragraphs: [
-          "Occasionally a certificate is withdrawn — a transcription error, a superseded revision, or material that was misidentified at receipt. A withdrawn certificate verifies as REVOKED with the reason shown, rather than disappearing. If you are shown a paper certificate that verifies as revoked, treat the paper as void.",
+          "Occasionally a certificate is withdrawn - a transcription error, a superseded revision, or material that was misidentified at receipt. A withdrawn certificate verifies as REVOKED with the reason shown, rather than disappearing. If you are shown a paper certificate that verifies as revoked, treat the paper as void.",
         ],
       },
     ],
@@ -366,7 +366,7 @@ export const KNOWLEDGE_ARTICLES = [
     category: "Interpreting Results",
     title: "Reading the chromatogram behind your result",
     excerpt:
-      "Peak shape, baseline behaviour and shoulder peaks — what the raw trace shows that a purity percentage cannot.",
+      "Peak shape, baseline behaviour and shoulder peaks - what the raw trace shows that a purity percentage cannot.",
     readingTime: "7 min",
     body: [
       {
@@ -378,7 +378,7 @@ export const KNOWLEDGE_ARTICLES = [
       {
         heading: "What to look at first",
         paragraphs: [
-          "Look at peak symmetry. A sharply fronting or badly tailing main peak suggests column overload or a chemistry problem, and can distort integration in either direction. Then look at the baseline before and after the main peak — drift or noise inflates or deflates small impurity peaks depending on how integration was drawn.",
+          "Look at peak symmetry. A sharply fronting or badly tailing main peak suggests column overload or a chemistry problem, and can distort integration in either direction. Then look at the baseline before and after the main peak - drift or noise inflates or deflates small impurity peaks depending on how integration was drawn.",
           "Finally, look for shoulders. A shoulder on the main peak often indicates a closely related impurity, frequently a deamidation or oxidation product, that a naive integration will fold into the main peak and report as purity.",
         ],
       },
@@ -425,7 +425,7 @@ export const KNOWLEDGE_ARTICLES = [
 /** Statistics shown on the home page and about page. */
 export const LAB_STATS = [
   { value: "42,000+", label: "Samples analysed" },
-  { value: "3–5", label: "Day standard turnaround" },
+  { value: "3-5", label: "Day standard turnaround" },
   { value: "0", label: "Peptides sold, ever" },
   { value: "100%", label: "Results reported as measured" },
 ] as const;

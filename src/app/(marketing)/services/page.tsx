@@ -186,8 +186,7 @@ export default function ServicesPage() {
                 </h2>
                 <p className="mt-5 text-pretty text-[15px] leading-relaxed text-muted-foreground">
                   Chromatographic and spectrometric assays can share material from
-                  a single vial. Sterility and bacterial endotoxin testing cannot —
-                  each consumes a dedicated, unopened vial, because the question
+                  a single vial. Sterility and bacterial endotoxin testing cannot - each consumes a dedicated, unopened vial, because the question
                   they answer is destroyed by the first entry.
                 </p>
                 <p className="mt-4 text-pretty text-[15px] leading-relaxed text-muted-foreground">

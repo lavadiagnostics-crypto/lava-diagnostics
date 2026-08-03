@@ -7,7 +7,7 @@ import { BRAND } from "@/lib/constants";
  * Legal pages.
  *
  * Content is drafted as a starting point and clearly flagged as requiring
- * review by qualified counsel before the site goes live — publishing
+ * review by qualified counsel before the site goes live - publishing
  * unreviewed terms is a liability, not a feature.
  */
 
@@ -117,7 +117,7 @@ const DOCS: Record<string, LegalDoc> = {
       {
         heading: "4. Sharing",
         paragraphs: [
-          "We do not sell personal information. We share it only with service providers who process it on our behalf under contract — our hosting provider, database provider, object-storage provider and transactional email provider — and only to the extent necessary to operate the service.",
+          "We do not sell personal information. We share it only with service providers who process it on our behalf under contract - our hosting provider, database provider, object-storage provider and transactional email provider - and only to the extent necessary to operate the service.",
           "We disclose information where required by law, and we will notify you of any such request unless legally prohibited from doing so.",
         ],
       },
@@ -166,7 +166,7 @@ const DOCS: Record<string, LegalDoc> = {
       {
         heading: "How we expect certificates to be used",
         paragraphs: [
-          "We expect our certificates to be used as evidence of composition — to qualify a supplier, to verify a label claim, to investigate a suspected substitution, or to demonstrate to a customer that a claim was independently checked.",
+          "We expect our certificates to be used as evidence of composition - to qualify a supplier, to verify a label claim, to investigate a suspected substitution, or to demonstrate to a customer that a claim was independently checked.",
           `We expect them not to be used to imply endorsement, approval, safety, or fitness for human use. Where we become aware of a certificate being misrepresented in that way, we reserve the right to revoke it and to decline further work. If you have questions about how a result may properly be described, contact us at ${BRAND.email} before publishing.`,
         ],
       },

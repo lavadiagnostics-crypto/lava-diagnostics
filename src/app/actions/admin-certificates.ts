@@ -26,7 +26,7 @@ import {
 import type { Prisma } from "@prisma/client";
 
 /**
- * Certificate lifecycle — the most security-sensitive admin surface.
+ * Certificate lifecycle - the most security-sensitive admin surface.
  *
  * Invariants enforced here:
  *
@@ -63,7 +63,7 @@ async function readPdf(
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  // Content sniffing, not just the declared MIME type — a renamed executable
+  // Content sniffing, not just the declared MIME type - a renamed executable
   // would otherwise be accepted and served back with a PDF content type.
   if (!looksLikePdf(buffer)) {
     return {
@@ -150,7 +150,7 @@ export async function createCertificate(
 
     /*
      * Create the row first so the object key can include the id, then upload.
-     * If the upload fails, the row is deleted — better a rolled-back create than
+     * If the upload fails, the row is deleted - better a rolled-back create than
      * a certificate row pointing at a nonexistent object.
      */
     const certificate = await prisma.certificate.create({
@@ -415,7 +415,7 @@ export async function makeCertificatePrivate(
  * Revokes a certificate.
  *
  * Distinct from making it private: a revoked certificate still resolves, and
- * tells the holder it was withdrawn and why. That is the correct behaviour — a
+ * tells the holder it was withdrawn and why. That is the correct behaviour - a
  * person holding a void document needs to know it is void, not be told it never
  * existed.
  */
@@ -527,8 +527,7 @@ export async function archiveCertificate(
  * Replaces the PDF, bumping the revision and recomputing the hash.
  *
  * The verification token is deliberately preserved so QR codes already printed
- * on physical documentation keep working. The hash changes, which is the point —
- * a holder comparing hashes can tell the document was reissued.
+ * on physical documentation keep working. The hash changes, which is the point - * a holder comparing hashes can tell the document was reissued.
  */
 export async function replaceCertificatePdf(
   formData: FormData,
@@ -781,7 +780,7 @@ export async function updateCertificateMetadata(
 /**
  * Permanently deletes a certificate and its objects.
  *
- * Intended only for genuine mistakes — an upload against the wrong customer, or
+ * Intended only for genuine mistakes - an upload against the wrong customer, or
  * a test record. A certificate that was ever released should be REVOKED instead,
  * so that holders of the document learn it is void rather than finding it
  * silently absent.
