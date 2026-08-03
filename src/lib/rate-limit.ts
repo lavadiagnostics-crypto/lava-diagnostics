@@ -1,4 +1,3 @@
-import { serverEnv } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
 
 /**
@@ -142,14 +141,19 @@ async function databaseLimit(
 export async function rateLimit(
   opts: RateLimitOptions,
 ): Promise<RateLimitResult> {
-  const env = serverEnv();
+  /*
+   * Read the two Redis variables directly rather than through `serverEnv()`.
+   *
+   * This function runs on every public verification, and `serverEnv()` validates
+   * the entire environment — so an unrelated misconfiguration elsewhere would
+   * throw here and take down verification rather than merely losing Redis. The
+   * tiers below already degrade gracefully; the config read should too.
+   */
+  const redisUrl = process.env.UPSTASH_REDIS_REST_URL?.trim();
+  const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN?.trim();
 
-  if (env.UPSTASH_REDIS_REST_URL && env.UPSTASH_REDIS_REST_TOKEN) {
-    const result = await redisLimit(
-      opts,
-      env.UPSTASH_REDIS_REST_URL,
-      env.UPSTASH_REDIS_REST_TOKEN,
-    );
+  if (redisUrl && redisToken) {
+    const result = await redisLimit(opts, redisUrl, redisToken);
     if (result) return result;
   }
 

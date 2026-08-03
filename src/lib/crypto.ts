@@ -1,5 +1,4 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
-import { serverEnv } from "@/lib/env";
 
 /**
  * Certificate integrity and access-grant primitives.
@@ -17,8 +16,25 @@ import { serverEnv } from "@/lib/env";
  *     certificate for a few minutes.
  */
 
+/**
+ * Reads the one secret this module needs, directly.
+ *
+ * Deliberately NOT via `serverEnv()`. That helper validates the whole
+ * environment, so an unrelated misconfiguration — a storage driver set to
+ * `supabase` without its keys, say — would throw here. `hashIp()` runs at the
+ * top of every verification, so that turned a storage typo into a total
+ * verification outage with a generic error page. One variable, read directly,
+ * with an error that names the actual problem.
+ */
 function hashSecret(): string {
-  return serverEnv().CERTIFICATE_HASH_SECRET;
+  const secret = process.env.CERTIFICATE_HASH_SECRET?.trim();
+  if (!secret || secret.length < 16) {
+    throw new Error(
+      "CERTIFICATE_HASH_SECRET is missing or too short (needs 16+ characters). " +
+        "Certificate hashing and PDF access grants cannot operate without it.",
+    );
+  }
+  return secret;
 }
 
 /** Constant-time string comparison that tolerates unequal lengths. */
