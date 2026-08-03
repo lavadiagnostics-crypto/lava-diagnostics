@@ -28,6 +28,7 @@ import {
   verifyCertificate,
 } from "@/lib/certificates/verify";
 import { prisma } from "@/lib/prisma";
+import { findBundledByToken } from "@/lib/certificates/bundled";
 import { generateQrSvg, verificationUrl } from "@/lib/qr";
 import { chunkHash, formatDate } from "@/lib/utils";
 import { BRAND } from "@/lib/constants";
@@ -131,6 +132,29 @@ function RateLimitedPanel({ retryAfterSeconds }: { retryAfterSeconds: number }) 
   );
 }
 
+/**
+ * Maps a verification token to a certificate id without throwing.
+ *
+ * Checks the bundled registry first — it needs no I/O — then the database.
+ * Returns null on any failure, which simply routes the caller into the full
+ * verification path rather than surfacing an error page.
+ */
+async function resolveCertificateId(token: string): Promise<string | null> {
+  const bundled = findBundledByToken(token);
+  if (bundled) return bundled.id;
+
+  try {
+    const row = await prisma.certificate.findUnique({
+      where: { verificationToken: token },
+      select: { id: true },
+    });
+    return row?.id ?? null;
+  } catch (error) {
+    console.error("[verify] token-to-id lookup failed", error);
+    return null;
+  }
+}
+
 export default async function VerifyTokenPage({
   params,
 }: {
@@ -148,14 +172,15 @@ export default async function VerifyTokenPage({
    *
    * The lookup here is by token, which is the bearer secret, so reusing a grant
    * cannot widen access: the visitor already had to present the token.
+   *
+   * `resolveCertificateId` swallows database errors on purpose: a bundled
+   * certificate must still render when Postgres is unreachable, and a failure
+   * here only means we fall through to the full verification path below.
    */
-  const existing = await prisma.certificate.findUnique({
-    where: { verificationToken: token },
-    select: { id: true },
-  });
+  const existingId = await resolveCertificateId(token);
 
-  let certificate = existing
-    ? await certificateFromActiveGrant(existing.id)
+  let certificate = existingId
+    ? await certificateFromActiveGrant(existingId)
     : null;
 
   if (!certificate) {
@@ -239,11 +264,14 @@ export default async function VerifyTokenPage({
   // ── Verified certificate ──
   const qrSvg = await generateQrSvg(certificate.verificationToken);
 
+  // Optional decoration only — a failure here must not blank the certificate.
   const order = certificate.orderId
-    ? await prisma.order.findUnique({
-        where: { id: certificate.orderId },
-        select: { orderNumber: true },
-      })
+    ? await prisma.order
+        .findUnique({
+          where: { id: certificate.orderId },
+          select: { orderNumber: true },
+        })
+        .catch(() => null)
     : null;
 
   const hashGroups = chunkHash(certificate.hash, 8);

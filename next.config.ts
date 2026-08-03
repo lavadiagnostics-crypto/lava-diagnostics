@@ -26,6 +26,18 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  /**
+   * Bundled certificate PDFs are read from the filesystem at request time, so
+   * they must be traced into the serverless function. Next only traces files it
+   * can see being imported, and these are opened by a runtime path — without
+   * this the route would 404 in production while working locally.
+   *
+   * They live outside `public/` on purpose: a public path would make them
+   * fetchable by URL, bypassing verification entirely.
+   */
+  outputFileTracingIncludes: {
+    "/api/certificates/[id]/pdf": ["./src/content/coa/**"],
+  },
   experimental: {
     serverActions: {
       bodySizeLimit: "25mb",

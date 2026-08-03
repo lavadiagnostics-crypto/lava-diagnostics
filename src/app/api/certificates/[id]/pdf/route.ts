@@ -4,6 +4,11 @@ import { auth } from "@/auth";
 import { GRANT_COOKIE, safeEqual, verifyAccessGrant } from "@/lib/crypto";
 import { prisma } from "@/lib/prisma";
 import { storage } from "@/lib/storage";
+import {
+  findBundledById,
+  isBundledId,
+  readBundledPdf,
+} from "@/lib/certificates/bundled";
 
 /**
  * Certificate PDF stream.
@@ -43,17 +48,33 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  const certificate = await prisma.certificate.findUnique({
-    where: { id },
-    select: {
-      id: true,
-      certificateNumber: true,
-      status: true,
-      pdfPath: true,
-      customerId: true,
-      verificationToken: true,
-    },
-  });
+  /*
+   * Bundled certificates ship with the deployment and have no database row, so
+   * they are resolved from the registry instead. Everything downstream —
+   * authorisation, headers, logging — is identical.
+   */
+  const bundled = isBundledId(id) ? findBundledById(id) : null;
+
+  const certificate = bundled
+    ? {
+        id: bundled.id,
+        certificateNumber: bundled.certificateNumber,
+        status: "VERIFIED" as const,
+        pdfPath: bundled.file,
+        customerId: bundled.id,
+        verificationToken: bundled.verificationToken,
+      }
+    : await prisma.certificate.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          certificateNumber: true,
+          status: true,
+          pdfPath: true,
+          customerId: true,
+          verificationToken: true,
+        },
+      });
 
   if (!certificate) return notFound();
 
@@ -115,25 +136,40 @@ export async function GET(
 
   if (!authorised) return notFound();
 
-  const object = await storage().download(certificate.pdfPath);
-  if (!object) {
+  const body = bundled
+    ? await readBundledPdf(bundled)
+    : (await storage().download(certificate.pdfPath))?.body ?? null;
+
+  if (!body) {
     console.error(
-      `[certificates] object missing from storage: ${certificate.pdfPath}`,
+      `[certificates] PDF bytes unavailable for ${certificate.certificateNumber} (${certificate.pdfPath})`,
     );
     return notFound();
   }
 
-  // `inline` so the browser's own viewer renders it rather than downloading;
-  // `?download=1` flips it to an attachment.
+  /*
+   * Disposition.
+   *
+   * `attachment` is offered only to a signed-in owner or an administrator — the
+   * people whose own document it is. A public visitor who verified a certificate
+   * gets `inline` regardless of what they put in the query string, so the
+   * verification page is a viewer rather than a download link.
+   *
+   * This is a deliberate limit, not a guarantee: any browser's built-in PDF
+   * viewer has its own save and print controls, so a determined visitor can
+   * still keep a copy. Preventing that would mean not sending the PDF at all and
+   * rendering page images instead.
+   */
+  const mayDownload = via === "owner" || via === "admin";
   const wantsDownload = request.nextUrl.searchParams.get("download") === "1";
-  const disposition = wantsDownload ? "attachment" : "inline";
+  const disposition = mayDownload && wantsDownload ? "attachment" : "inline";
   const filename = `${certificate.certificateNumber}.pdf`;
 
-  return new Response(new Uint8Array(object.body), {
+  return new Response(new Uint8Array(body), {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Length": String(object.body.byteLength),
+      "Content-Length": String(body.byteLength),
       "Content-Disposition": `${disposition}; filename="${filename}"`,
       "Cache-Control": "no-store, max-age=0, must-revalidate",
       "X-Robots-Tag": "noindex, nofollow, noarchive, nosnippet",

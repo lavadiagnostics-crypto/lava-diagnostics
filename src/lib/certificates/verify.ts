@@ -11,6 +11,13 @@ import {
 import { clientIp } from "@/lib/audit";
 import { normaliseCertificateNumber } from "@/lib/ids";
 import { rateLimit, RATE_LIMITS } from "@/lib/rate-limit";
+import {
+  findBundledById,
+  findBundledByNumber,
+  findBundledByToken,
+  isBundledId,
+  toCertificateShape,
+} from "@/lib/certificates/bundled";
 import type { Certificate } from "@prisma/client";
 
 /**
@@ -184,6 +191,47 @@ async function issueGrantCookie(certificateId: string): Promise<void> {
   }
 }
 
+/**
+ * Exact-match lookup by verification token: database first, then the bundled
+ * registry.
+ *
+ * The database call is wrapped because a bundled certificate must stay
+ * verifiable even when Postgres is unreachable — those documents are baked into
+ * the deployment and have no runtime dependency of their own. A database outage
+ * degrades the service; it should not make the laboratory's own reference
+ * certificates read as forgeries.
+ */
+async function lookupByToken(token: string): Promise<Certificate | null> {
+  try {
+    const row = await prisma.certificate.findUnique({
+      where: { verificationToken: token },
+    });
+    if (row) return row;
+  } catch (error) {
+    console.error("[verify] database lookup by token failed", error);
+  }
+
+  const bundled = findBundledByToken(token);
+  return bundled ? toCertificateShape(bundled) : null;
+}
+
+/** Exact-match lookup by certificate number. See `lookupByToken`. */
+async function lookupByNumber(
+  certificateNumber: string,
+): Promise<Certificate | null> {
+  try {
+    const row = await prisma.certificate.findUnique({
+      where: { certificateNumber },
+    });
+    if (row) return row;
+  } catch (error) {
+    console.error("[verify] database lookup by number failed", error);
+  }
+
+  const bundled = findBundledByNumber(certificateNumber);
+  return bundled ? toCertificateShape(bundled) : null;
+}
+
 /** Resolves a verification request to at most one certificate. */
 export async function verifyCertificate(
   input: VerifyInput,
@@ -224,15 +272,11 @@ export async function verifyCertificate(
   if (token) {
     // ── Path A: token from a QR scan. ──
     method = "token";
-    certificate = await prisma.certificate.findUnique({
-      where: { verificationToken: token },
-    });
+    certificate = await lookupByToken(token);
   } else if (number && code) {
     // Number plus code: both must resolve to the SAME record.
     method = "number_and_code";
-    const candidate = await prisma.certificate.findUnique({
-      where: { certificateNumber: number },
-    });
+    const candidate = await lookupByNumber(number);
     if (candidate && safeEqual(code, candidate.verificationToken)) {
       certificate = candidate;
     }
@@ -249,16 +293,12 @@ export async function verifyCertificate(
       return { status: "CODE_REQUIRED" };
     }
     method = "number";
-    certificate = await prisma.certificate.findUnique({
-      where: { certificateNumber: number },
-    });
+    certificate = await lookupByNumber(number);
   } else if (code) {
     // A bare code is treated as a token - this is what a client pastes from
     // their COA-ready email.
     method = "code_as_token";
-    certificate = await prisma.certificate.findUnique({
-      where: { verificationToken: code },
-    });
+    certificate = await lookupByToken(code);
   }
 
   const fragment = token ?? number ?? code;
@@ -279,11 +319,18 @@ export async function verifyCertificate(
     return { status: "NOT_FOUND" };
   }
 
+  /*
+   * A bundled certificate has no database row, so it cannot be the target of a
+   * foreign key or a view-count update. Log the attempt against a null
+   * certificate rather than a synthetic id that would violate the constraint.
+   */
+  const bundled = isBundledId(certificate.id);
+
   if (certificate.status === "REVOKED") {
     // Revocation IS disclosed: a holder of a withdrawn certificate needs to
     // know it was withdrawn rather than be told it never existed.
     await logAttempt({
-      certificateId: certificate.id,
+      certificateId: bundled ? null : certificate.id,
       method,
       success: false,
       queryFragment: fragment,
@@ -296,16 +343,22 @@ export async function verifyCertificate(
 
   await Promise.all([
     logAttempt({
-      certificateId: certificate.id,
+      certificateId: bundled ? null : certificate.id,
       method,
       success: true,
       queryFragment: fragment,
       ipHash,
     }),
-    prisma.certificate.update({
-      where: { id: certificate.id },
-      data: { viewCount: { increment: 1 }, lastViewedAt: new Date() },
-    }),
+    bundled
+      ? Promise.resolve()
+      : prisma.certificate
+          .update({
+            where: { id: certificate.id },
+            data: { viewCount: { increment: 1 }, lastViewedAt: new Date() },
+          })
+          .catch((error) =>
+            console.error("[verify] view counter update failed", error),
+          ),
   ]);
 
   return { status: "SUCCESS", certificate };
@@ -325,12 +378,21 @@ export async function certificateFromActiveGrant(
   const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
   if (!grant || grant.certificateId !== certificateId) return null;
 
-  const certificate = await prisma.certificate.findUnique({
-    where: { id: certificateId },
-  });
-  if (!certificate || certificate.status !== "VERIFIED") return null;
+  if (isBundledId(certificateId)) {
+    const bundled = findBundledById(certificateId);
+    return bundled ? toCertificateShape(bundled) : null;
+  }
 
-  return certificate;
+  try {
+    const certificate = await prisma.certificate.findUnique({
+      where: { id: certificateId },
+    });
+    if (!certificate || certificate.status !== "VERIFIED") return null;
+    return certificate;
+  } catch (error) {
+    console.error("[verify] grant re-check failed", error);
+    return null;
+  }
 }
 
 /** True when the caller holds a live grant for this certificate. */

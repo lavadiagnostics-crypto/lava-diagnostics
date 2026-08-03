@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Download, ExternalLink, FileText, Loader2 } from "lucide-react";
+import { ExternalLink, FileText, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /**
@@ -40,7 +40,6 @@ export function PdfViewer({
 
   const base = `/api/certificates/${certificateId}/pdf`;
   const src = `${base}?t=${encodeURIComponent(verificationToken)}`;
-  const downloadHref = `${src}&download=1`;
 
   // If the frame has not reported load within a few seconds, surface the
   // fallback rather than leaving a permanent spinner.
@@ -87,20 +86,20 @@ export function PdfViewer({
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
                 This is a browser limitation, not a problem with the certificate.
-                Open it in a new tab or download it instead.
+                Open it in a new tab to read it.
               </p>
             </div>
           </div>
         </div>
       ) : null}
 
-      <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-        <Button asChild className="w-full sm:w-auto">
-          <a href={downloadHref} download={`${certificateNumber}.pdf`}>
-            <Download aria-hidden />
-            Download PDF
-          </a>
-        </Button>
+      {/*
+        View only. The public verification page deliberately offers no download
+        button - the certificate is here to be read and checked against the
+        details beside it, not collected. The stream route enforces the same
+        thing server-side, so removing this button is not the only control.
+      */}
+      <div className="mt-5">
         <Button variant="outline" asChild className="w-full sm:w-auto">
           <a href={src} target="_blank" rel="noopener noreferrer">
             <ExternalLink aria-hidden />
@@ -110,9 +109,10 @@ export function PdfViewer({
       </div>
 
       <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-        This document is served from private storage through an authorised,
-        time-limited session. The link above is not shareable - anyone else
-        opening it must verify the certificate themselves.
+        Preview only. This document is served from private storage through an
+        authorised, time-limited session and is not offered as a download. The
+        link is not shareable - anyone else opening it must verify the
+        certificate themselves.
       </p>
     </div>
   );
