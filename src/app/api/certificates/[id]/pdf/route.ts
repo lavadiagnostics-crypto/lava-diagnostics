@@ -84,7 +84,14 @@ export async function GET(
 
   // 1. Grant cookie from a successful verification, scoped to this certificate.
   const store = await cookies();
-  const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
+  let grant: ReturnType<typeof verifyAccessGrant> = null;
+  try {
+    grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
+  } catch (error) {
+    // A malformed cookie or a rotated secret should fall through to the
+    // token/session checks below, not take the whole stream down.
+    console.error("[certificates] grant signature check failed", error);
+  }
   if (grant?.certificateId === certificate.id) {
     // A grant does not survive revocation - status is re-checked here, not
     // trusted from when the grant was minted.

@@ -156,22 +156,38 @@ export async function readBundledPdf(
  */
 const hashCache = new Map<string, string>();
 
+/**
+ * Falls back to this when `CERTIFICATE_HASH_SECRET` is missing or invalid, so
+ * a bad secret degrades the tamper-evidence display rather than taking down
+ * the certificate view entirely - the same principle applied everywhere else
+ * a secret-derived value is computed on this route.
+ */
+const HASH_UNAVAILABLE = "0".repeat(64);
+
 async function bundledHash(certificate: BundledCertificate): Promise<string> {
   const cached = hashCache.get(certificate.id);
   if (cached) return cached;
 
-  const bytes = await readBundledPdf(certificate);
-  const hash = certificateHash({
-    certificateNumber: certificate.certificateNumber,
-    customerName: certificate.customerName,
-    product: certificate.product,
-    batchNumber: certificate.batchNumber,
-    issuedDate: new Date(certificate.issuedDate),
-    pdfSha256: bytes ? sha256(bytes) : "missing",
-  });
+  try {
+    const bytes = await readBundledPdf(certificate);
+    const hash = certificateHash({
+      certificateNumber: certificate.certificateNumber,
+      customerName: certificate.customerName,
+      product: certificate.product,
+      batchNumber: certificate.batchNumber,
+      issuedDate: new Date(certificate.issuedDate),
+      pdfSha256: bytes ? sha256(bytes) : "missing",
+    });
 
-  hashCache.set(certificate.id, hash);
-  return hash;
+    hashCache.set(certificate.id, hash);
+    return hash;
+  } catch (error) {
+    console.error(
+      `[bundled] could not compute integrity hash for ${certificate.certificateNumber}`,
+      error,
+    );
+    return HASH_UNAVAILABLE;
+  }
 }
 
 /**

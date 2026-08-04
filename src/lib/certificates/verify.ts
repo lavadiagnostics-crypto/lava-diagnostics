@@ -236,7 +236,20 @@ async function lookupByNumber(
 export async function verifyCertificate(
   input: VerifyInput,
 ): Promise<VerificationOutcome> {
-  const ipHash = hashIp(await clientIp());
+  /*
+   * Guarded like every other call in this file: `hashIp` throws if
+   * `CERTIFICATE_HASH_SECRET` is missing or misconfigured, and this line runs
+   * before anything else on every single verification. Unguarded, a bad
+   * secret takes the entire route down instead of just weakening IP-keyed
+   * rate limiting.
+   */
+  let ipHash: string | null;
+  try {
+    ipHash = hashIp(await clientIp());
+  } catch (error) {
+    console.error("[verify] failed to hash client ip", error);
+    ipHash = null;
+  }
 
   if (await isLockedOut(ipHash)) {
     return {
@@ -375,7 +388,13 @@ export async function certificateFromActiveGrant(
   certificateId: string,
 ): Promise<Certificate | null> {
   const store = await cookies();
-  const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
+  let grant: ReturnType<typeof verifyAccessGrant>;
+  try {
+    grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
+  } catch (error) {
+    console.error("[verify] grant signature check failed", error);
+    grant = null;
+  }
   if (!grant || grant.certificateId !== certificateId) return null;
 
   if (isBundledId(certificateId)) {
@@ -398,6 +417,11 @@ export async function certificateFromActiveGrant(
 /** True when the caller holds a live grant for this certificate. */
 export async function hasActiveGrant(certificateId: string): Promise<boolean> {
   const store = await cookies();
-  const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
-  return grant?.certificateId === certificateId;
+  try {
+    const grant = verifyAccessGrant(store.get(GRANT_COOKIE)?.value);
+    return grant?.certificateId === certificateId;
+  } catch (error) {
+    console.error("[verify] grant signature check failed", error);
+    return false;
+  }
 }
