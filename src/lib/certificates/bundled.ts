@@ -94,6 +94,68 @@ export const BUNDLED_CERTIFICATES: readonly BundledCertificate[] = [
     signedTitle: "Laboratory Director",
     issuedDate: "2026-07-30",
   },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1138`,
+    certificateNumber: "LAVA-2026-1138",
+    verificationToken: "KEPfTtQXX8eaTBkXu7Z6J8Zgvczw",
+    file: "LAVA-2026-1138.pdf",
+    customerName: "Vault Peptides India",
+    product: "Retatrutide (PS-R3)",
+    batchNumber: "RT/100526",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.62",
+    contentResult: "20.31",
+    summary:
+      "Peptide purity 99.62% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as Retatrutide by retention-time comparison with a reference standard. Net peptide content 20.31 mg against a 20 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-07-30",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1210`,
+    certificateNumber: "LAVA-2026-1210",
+    verificationToken: "zrKWXDKFseSEQgADz4k3ooUMvWYp",
+    file: "LAVA-2026-1210.pdf",
+    customerName: "Vault Peptides India",
+    product: "MOTS-C",
+    batchNumber: "MC/290426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.26",
+    contentResult: "20.93",
+    /*
+     * The identity line mirrors the issued document, which records the
+     * retention-time comparison against a Retatrutide reference standard. That
+     * reads as a template carry-over on a MOTS-C certificate; it is reproduced
+     * verbatim here rather than silently corrected, because this metadata must
+     * never contradict the signed PDF a verifier is looking at. Correcting it
+     * means re-issuing the document and updating this entry together.
+     */
+    summary:
+      "Peptide purity 99.26% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed by retention-time comparison against the reference standard recorded on the certificate. Net peptide content 20.93 mg against a 20 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-01",
+  },
 ] as const;
 
 /** Absolute path to a bundled PDF on the server filesystem. */
