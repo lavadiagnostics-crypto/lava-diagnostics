@@ -156,6 +156,93 @@ export const BUNDLED_CERTIFICATES: readonly BundledCertificate[] = [
     signedTitle: "Laboratory Director",
     issuedDate: "2026-08-01",
   },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1253`,
+    certificateNumber: "LAVA-2026-1253",
+    verificationToken: "7A5sTQPAViCDfLUsw7Sou3Ykaree",
+    file: "LAVA-2026-1253.pdf",
+    customerName: "Vault Peptides India",
+    product: "GHK-Cu",
+    batchNumber: "CU/110426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.28",
+    contentResult: "52.1",
+    summary:
+      "Peptide purity 99.28% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as GHK-Cu by retention-time comparison with a reference standard. Net peptide content 52.1 mg against a 50 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-02",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1255`,
+    certificateNumber: "LAVA-2026-1255",
+    verificationToken: "T9QtbRdPszjxJH55nCnNn8NbpNT3",
+    file: "LAVA-2026-1255.pdf",
+    customerName: "Vault Peptides India",
+    product: "GHK-Cu",
+    batchNumber: "CU/110426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.51",
+    contentResult: "101.3",
+    summary:
+      "Peptide purity 99.51% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as GHK-Cu by retention-time comparison with a reference standard. Net peptide content 101.3 mg against a 100 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-02",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1292`,
+    certificateNumber: "LAVA-2026-1292",
+    verificationToken: "iiu4pLgpW8BtdMGsCacFgABiogRB",
+    file: "LAVA-2026-1292.pdf",
+    customerName: "Vault Peptides India",
+    product: "CJC-1295 (no DAC) + Ipamorelin",
+    batchNumber: "CI/220426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.56",
+    /*
+     * A two-component blend reports one figure per peptide (5.44 mg CJC-1295
+     * and 5.10 mg Ipamorelin). This field renders through Number(), so any
+     * combined string would display as NaN. Left null so the row is omitted,
+     * with the split stated in the summary where it reads correctly.
+     */
+    contentResult: null,
+    summary:
+      "Peptide purity 99.56% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as CJC-1295 (without DAC) and Ipamorelin by retention-time comparison with reference standards. Net peptide content 5.44 mg CJC-1295 and 5.10 mg Ipamorelin, against a 10 mg combined label claim for the blend. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-03",
+  },
 ] as const;
 
 /** Absolute path to a bundled PDF on the server filesystem. */
