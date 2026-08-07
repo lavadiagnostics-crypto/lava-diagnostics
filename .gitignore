@@ -23,3 +23,4 @@ tsconfig.tsbuildinfo
 # Loose COA source PDFs kept beside the repo for convenience. Certificates that
 # should actually ship live in src/content/coa/ and are committed deliberately.
 /LAVA DIAGNOSTICS COAs/
+/peptide club/

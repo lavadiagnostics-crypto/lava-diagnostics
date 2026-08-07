@@ -142,16 +142,8 @@ export const BUNDLED_CERTIFICATES: readonly BundledCertificate[] = [
     result: "PASS",
     purityResult: "99.26",
     contentResult: "20.93",
-    /*
-     * The identity line mirrors the issued document, which records the
-     * retention-time comparison against a Retatrutide reference standard. That
-     * reads as a template carry-over on a MOTS-C certificate; it is reproduced
-     * verbatim here rather than silently corrected, because this metadata must
-     * never contradict the signed PDF a verifier is looking at. Correcting it
-     * means re-issuing the document and updating this entry together.
-     */
     summary:
-      "Peptide purity 99.26% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed by retention-time comparison against the reference standard recorded on the certificate. Net peptide content 20.93 mg against a 20 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+      "Peptide purity 99.26% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as MOTS-C by retention-time comparison with a reference standard. Net peptide content 20.93 mg against a 20 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
     signedBy: "Dr. Alan Vance",
     signedTitle: "Laboratory Director",
     issuedDate: "2026-08-01",
@@ -239,6 +231,89 @@ export const BUNDLED_CERTIFICATES: readonly BundledCertificate[] = [
     contentResult: null,
     summary:
       "Peptide purity 99.56% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as CJC-1295 (without DAC) and Ipamorelin by retention-time comparison with reference standards. Net peptide content 5.44 mg CJC-1295 and 5.10 mg Ipamorelin, against a 10 mg combined label claim for the blend. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-03",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1618`,
+    certificateNumber: "LAVA-2026-1618",
+    verificationToken: "oGp7JeRwmJSTSatnPGt7DWHDzfhF",
+    file: "LAVA-2026-1618.pdf",
+    customerName: "Vault Peptides India",
+    product: "BPC-157",
+    batchNumber: "BPC/250526",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.37",
+    contentResult: "10",
+    summary:
+      "Peptide purity 99.37% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as BPC-157 by retention-time comparison with a reference standard. Net peptide content 10 mg against a 10 mg label claim. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-03",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1633`,
+    certificateNumber: "LAVA-2026-1633",
+    verificationToken: "CqURgxadTYVwNUVYg3MJU2y2ReCA",
+    file: "LAVA-2026-1633.pdf",
+    customerName: "Vault Peptides India",
+    product: "Wolverine Blend (BPC-157 + TB-500)",
+    batchNumber: "WB/2Q0426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.37",
+    // Reported per component (5.1 mg / 5.6 mg). See LAVA-2026-1292.
+    contentResult: null,
+    summary:
+      "Peptide purity 99.37% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as BPC-157 and TB-500 by retention-time comparison with reference standards. Net peptide content 5.1 mg BPC-157 and 5.6 mg TB-500, against a 10 mg combined label claim for the blend. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
+    signedBy: "Dr. Alan Vance",
+    signedTitle: "Laboratory Director",
+    issuedDate: "2026-08-03",
+  },
+  {
+    id: `${BUNDLED_ID_PREFIX}LAVA-2026-1634`,
+    certificateNumber: "LAVA-2026-1634",
+    verificationToken: "CKUhGQgqmjb3kGL9bw3FJeHb7GRx",
+    file: "LAVA-2026-1634.pdf",
+    customerName: "Vault Peptides India",
+    product: "Wolverine Blend (BPC-157 + TB-500)",
+    batchNumber: "WB/2Q0426",
+    lotNumber: null,
+    testedFor: [
+      "Peptide Purity (RP-HPLC)",
+      "Net Peptide Content",
+      "Identity Confirmation",
+      "Fentanyl Screen",
+      "Elemental Impurities (ICP-MS)",
+      "Sterility (PCR)",
+      "Bacterial Endotoxins",
+    ],
+    result: "PASS",
+    purityResult: "99.59",
+    // Reported per component (10.2 mg / 10.1 mg). See LAVA-2026-1292.
+    contentResult: null,
+    summary:
+      "Peptide purity 99.59% by RP-HPLC area normalisation at 214 nm, against a specification of not less than 95.0%. Identity confirmed as BPC-157 and TB-500 by retention-time comparison with reference standards. Net peptide content 10.2 mg BPC-157 and 10.1 mg TB-500, against a 20 mg combined label claim for the blend. Arsenic, cadmium, chromium, mercury and lead all not detected by ICP-MS. Sterility showed no growth and bacterial endotoxins were within the 0.05 EU/mL limit. Fentanyl not detected.",
     signedBy: "Dr. Alan Vance",
     signedTitle: "Laboratory Director",
     issuedDate: "2026-08-03",
